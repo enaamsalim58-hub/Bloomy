@@ -1,0 +1,1 @@
+namespace Bloomy.Api.Models { public class OrderItem { public int OrderItemId { get; set; } } }

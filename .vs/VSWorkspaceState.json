@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\Bloomy.Api",
+    "\\backend\\Bloomy.Api\\Controllers",
+    "\\backend\\Bloomy.Api\\Data",
+    "\\backend\\Bloomy.Api\\Models"
+  ],
+  "SelectedNode": "\\backend\\Bloomy.Api\\Data\\BloomyDbContext.cs",
+  "PreviewInSolutionExplorer": false
+}

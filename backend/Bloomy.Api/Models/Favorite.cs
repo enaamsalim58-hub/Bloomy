@@ -1,0 +1,1 @@
+namespace Bloomy.Api.Models { public class Favorite { public int FavoriteId { get; set; } } }
