@@ -141,3 +141,4 @@ C:\Users\saudr\OneDrive\Desktop\T.Maram project API\backend\Bloomy.Api\obj\Debug
 C:\Users\saudr\OneDrive\Desktop\T.Maram project API\backend\Bloomy.Api\obj\Debug\net8.0\Bloomy.Api.pdb
 C:\Users\saudr\OneDrive\Desktop\T.Maram project API\backend\Bloomy.Api\obj\Debug\net8.0\Bloomy.Api.genruntimeconfig.cache
 C:\Users\saudr\OneDrive\Desktop\T.Maram project API\backend\Bloomy.Api\obj\Debug\net8.0\ref\Bloomy.Api.dll
+C:\Users\saudr\OneDrive\Desktop\T.Maram project API\backend\Bloomy.Api\obj\Debug\net8.0\Bloomy.Api.sourcelink.json

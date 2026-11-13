@@ -4,16 +4,16 @@ namespace Bloomy.Api.DTOs
     {
         public int CategoryId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
+        public string? ImageUrl { get; set; } // استبدلناها لتطابق جدول الأقسام في الخطة
     }
 }
 
-// كلاس خاص بعملية الإضافة ليكون مرتباً ونظيفاً مثل المنتجات
+// كلاس خاص بعملية الإضافة والتعديل للأقسام
 namespace Bloomy.Api.DTOs
 {
     public class CategoryCreateDto
     {
         public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
+        public string? ImageUrl { get; set; } // لتكون متناسقة مع إرسال رابط صورة القسم
     }
 }

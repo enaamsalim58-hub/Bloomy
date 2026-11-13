@@ -1,5 +1,5 @@
 using Bloomy.Api.Data;
-using Bloomy.Api.DTOs; // استدعاء مجلد الـ DTOs
+using Bloomy.Api.DTOs;
 using Bloomy.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +23,7 @@ namespace Bloomy.Api.Controllers
         {
             var products = await _context.Products
                 .Include(p => p.Category)
+                .Include(p => p.PriceOffer) // تضمين عرض السعر إن وجد
                 .Select(p => new ProductDto
                 {
                     ProductId = p.ProductId,
@@ -30,7 +31,8 @@ namespace Bloomy.Api.Controllers
                     Description = p.Description,
                     Price = p.Price,
                     StockQuantity = p.StockQuantity,
-                    ImageUrl = p.ImageUrl,
+                    IsAvailable = p.IsAvailable,           // الحقل الجديد المطابق للخطة
+                    MainImageUrl = p.MainImageUrl,         // التسمية الجديدة المطابقة للخطة
                     CategoryName = p.Category != null ? p.Category.Name : string.Empty
                 })
                 .ToListAsync();
@@ -44,6 +46,11 @@ namespace Bloomy.Api.Controllers
         {
             var productDto = await _context.Products
                 .Include(p => p.Category)
+                .Include(p => p.ProductImages) // جلب صور المنتج المتعددة
+                .Include(p => p.ProductSizes)  // جلب الأحجام
+                .Include(p => p.ProductColors) // جلب الألوان
+                .Include(p => p.PriceOffer)    // جلب عرض السعر
+                .Include(p => p.Tags)          // جلب الوسوم
                 .Where(p => p.ProductId == id)
                 .Select(p => new ProductDto
                 {
@@ -52,8 +59,10 @@ namespace Bloomy.Api.Controllers
                     Description = p.Description,
                     Price = p.Price,
                     StockQuantity = p.StockQuantity,
-                    ImageUrl = p.ImageUrl,
+                    IsAvailable = p.IsAvailable,
+                    MainImageUrl = p.MainImageUrl,
                     CategoryName = p.Category != null ? p.Category.Name : string.Empty
+                    // ملاحظة: يمكنك إضافة قوائم الصور والأحجام هنا في الـ DTO الخاص بك إذا كنتِ تريدين إرجاعها في تفاصيل الشاشة الثانية
                 })
                 .FirstOrDefaultAsync();
 
@@ -76,14 +85,15 @@ namespace Bloomy.Api.Controllers
                 return BadRequest("القسم المحدد غير موجود.");
             }
 
-            // تحويل الـ DTO إلى كلاس المنتج الأساسي للحفظ
+            // تحويل الـ DTO إلى كلاس المنتج الأساسي للحفظ (باستخدام الأسماء الجديدة الحقول)
             var product = new Product
             {
                 Name = createDto.Name,
                 Description = createDto.Description,
                 Price = createDto.Price,
                 StockQuantity = createDto.StockQuantity,
-                ImageUrl = createDto.ImageUrl,
+                IsAvailable = createDto.IsAvailable,       // التحديث الجديد
+                MainImageUrl = createDto.MainImageUrl,     // التحديث الجديد
                 CategoryId = createDto.CategoryId
             };
 
@@ -101,7 +111,8 @@ namespace Bloomy.Api.Controllers
                     Description = p.Description,
                     Price = p.Price,
                     StockQuantity = p.StockQuantity,
-                    ImageUrl = p.ImageUrl,
+                    IsAvailable = p.IsAvailable,
+                    MainImageUrl = p.MainImageUrl,
                     CategoryName = p.Category != null ? p.Category.Name : string.Empty
                 })
                 .FirstOrDefaultAsync();
@@ -126,12 +137,13 @@ namespace Bloomy.Api.Controllers
                 return BadRequest("القسم المحدد غير موجود.");
             }
 
-            // تحديث البيانات
+            // تحديث البيانات بالأسماء الجديدة
             product.Name = updateDto.Name;
             product.Description = updateDto.Description;
             product.Price = updateDto.Price;
             product.StockQuantity = updateDto.StockQuantity;
-            product.ImageUrl = updateDto.ImageUrl;
+            product.IsAvailable = updateDto.IsAvailable;
+            product.MainImageUrl = updateDto.MainImageUrl;
             product.CategoryId = updateDto.CategoryId;
 
             _context.Entry(product).State = EntityState.Modified;
