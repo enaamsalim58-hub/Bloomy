@@ -1,3 +1,4 @@
+using Bloomy.Api.Services;
 using Bloomy.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<BloomyDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+
+// ===== Users services (Student 5) =====
+builder.Services.AddScoped<IUserService, UserService>();
 
 // CORS Policy
 builder.Services.AddCors(options =>

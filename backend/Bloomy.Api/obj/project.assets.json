@@ -4442,23 +4442,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\saudr\\.nuget\\packages\\": {},
+    "C:\\Users\\HP\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\saudr\\OneDrive\\Desktop\\T.Maram project API\\backend\\Bloomy.Api\\Bloomy.Api.csproj",
+      "projectUniqueName": "C:\\Bloomy\\backend\\Bloomy.Api\\Bloomy.Api.csproj",
       "projectName": "Bloomy.Api",
-      "projectPath": "C:\\Users\\saudr\\OneDrive\\Desktop\\T.Maram project API\\backend\\Bloomy.Api\\Bloomy.Api.csproj",
-      "packagesPath": "C:\\Users\\saudr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\saudr\\OneDrive\\Desktop\\T.Maram project API\\backend\\Bloomy.Api\\obj\\",
+      "projectPath": "C:\\Bloomy\\backend\\Bloomy.Api\\Bloomy.Api.csproj",
+      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+      "outputPath": "C:\\Bloomy\\backend\\Bloomy.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\saudr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
