@@ -7,7 +7,8 @@ namespace Bloomy.Api.DTOs
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
-        public string? ImageUrl { get; set; }
-        public string CategoryName { get; set; } = string.Empty; // لعرض اسم القسم مباشرة دون الحاجة لعرض الـ ID المعقد
+        public bool IsAvailable { get; set; }        // أضفناه ليعرض حالة توفر المنتج
+        public string? MainImageUrl { get; set; }    // استبدلناها بـ MainImageUrl لتطابق جدول الخطة
+        public string CategoryName { get; set; } = string.Empty; // لعرض اسم القسم مباشرة
     }
 }

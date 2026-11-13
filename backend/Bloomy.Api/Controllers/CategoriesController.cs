@@ -26,7 +26,7 @@ namespace Bloomy.Api.Controllers
                 {
                     CategoryId = c.CategoryId,
                     Name = c.Name,
-                    Description = c.Description
+                    ImageUrl = c.ImageUrl
                 })
                 .ToListAsync();
 
@@ -43,7 +43,7 @@ namespace Bloomy.Api.Controllers
                 {
                     CategoryId = c.CategoryId,
                     Name = c.Name,
-                    Description = c.Description
+                    ImageUrl = c.ImageUrl
                 })
                 .FirstOrDefaultAsync();
 
@@ -62,7 +62,7 @@ namespace Bloomy.Api.Controllers
             var category = new Category
             {
                 Name = createDto.Name,
-                Description = createDto.Description
+                ImageUrl = createDto.ImageUrl
             };
 
             _context.Categories.Add(category);
@@ -72,7 +72,7 @@ namespace Bloomy.Api.Controllers
             {
                 CategoryId = category.CategoryId,
                 Name = category.Name,
-                Description = category.Description
+                ImageUrl = category.ImageUrl
             };
 
             return CreatedAtAction(nameof(GetCategory), new { id = category.CategoryId }, categoryDto);
@@ -90,7 +90,7 @@ namespace Bloomy.Api.Controllers
 
             // تحديث البيانات
             category.Name = updateDto.Name;
-            category.Description = updateDto.Description;
+            category.ImageUrl = updateDto.ImageUrl;
 
             _context.Entry(category).State = EntityState.Modified;
 
@@ -114,7 +114,6 @@ namespace Bloomy.Api.Controllers
         }
 
         // DELETE: api/Categories/5
-        // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
@@ -130,7 +129,7 @@ namespace Bloomy.Api.Controllers
             // التحقق مما إذا كان القسم يحتوي على منتجات بداخله
             if (category.Products != null && category.Products.Any())
             {
-                return BadRequest("لا يمكن حذف هذا القسم لأنه يحتوي على منتجات. يجيب حذف المنتجات المرتبطة به أولاً.");
+                return BadRequest("لا يمكن حذف هذا القسم لأنه يحتوي على منتجات. يجب حذف المنتجات المرتبطة به أولاً.");
             }
 
             _context.Categories.Remove(category);
