@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// 1. إضافة خدمات الـ Swagger لدعم توثيق واجهات الـ API
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 // Database Connection
 builder.Services.AddDbContext<BloomyDbContext>(options =>
     options.UseSqlServer(
@@ -24,6 +28,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// 2. تفعيل الـ Swagger في بيئة التطوير
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseCors("AngularPolicy");
