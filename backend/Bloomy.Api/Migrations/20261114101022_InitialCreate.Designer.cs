@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomy.Api.Migrations
 {
     [DbContext(typeof(BloomyDbContext))]
-    [Migration("20261113171245_AddCatalogModule")]
-    partial class AddCatalogModule
+    [Migration("20261114101022_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,43 @@ namespace Bloomy.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Bloomy.Api.Models.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = 1,
+                            AddressLine = "المكلا - بن عزون",
+                            Title = "المنزل",
+                            UserId = 2
+                        });
+                });
+
             modelBuilder.Entity("Bloomy.Api.Models.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
@@ -33,14 +70,28 @@ namespace Bloomy.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int?>("ProductColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductSizeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("CartItemId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItem");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.Category", b =>
@@ -95,20 +146,115 @@ namespace Bloomy.Api.Migrations
 
             modelBuilder.Entity("Bloomy.Api.Models.Favorite", b =>
                 {
-                    b.Property<int>("FavoriteId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteId"));
-
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("FavoriteId");
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Favorite");
+                    b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("Bloomy.Api.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<decimal>("DeliveryFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ReceiverPhone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1052,
+                            DeliveryAddress = "المكلا",
+                            DeliveryFee = 10m,
+                            Discount = 0m,
+                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5342),
+                            ReceiverName = "سارة",
+                            ReceiverPhone = "770000000",
+                            Status = 0,
+                            Subtotal = 199m,
+                            Total = 209m,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            OrderId = 1053,
+                            DeliveryAddress = "المكلا",
+                            DeliveryFee = 10m,
+                            Discount = 0m,
+                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5351),
+                            ReceiverName = "سارة",
+                            ReceiverPhone = "770000000",
+                            Status = 1,
+                            Subtotal = 149m,
+                            Total = 159m,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            OrderId = 1054,
+                            DeliveryAddress = "المكلا",
+                            DeliveryFee = 10m,
+                            Discount = 0m,
+                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5355),
+                            ReceiverName = "سارة",
+                            ReceiverPhone = "770000000",
+                            Status = 3,
+                            Subtotal = 180m,
+                            Total = 190m,
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.OrderItem", b =>
@@ -119,14 +265,59 @@ namespace Bloomy.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderItemId");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderItemId = 1,
+                            OrderId = 1052,
+                            ProductId = 1,
+                            Quantity = 1,
+                            UnitPrice = 199m
+                        },
+                        new
+                        {
+                            OrderItemId = 2,
+                            OrderId = 1053,
+                            ProductId = 2,
+                            Quantity = 1,
+                            UnitPrice = 149m
+                        },
+                        new
+                        {
+                            OrderItemId = 3,
+                            OrderId = 1054,
+                            ProductId = 3,
+                            Quantity = 1,
+                            UnitPrice = 90m
+                        },
+                        new
+                        {
+                            OrderItemId = 4,
+                            OrderId = 1054,
+                            ProductId = 4,
+                            Quantity = 1,
+                            UnitPrice = 90m
+                        });
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.PriceOffer", b =>
@@ -320,14 +511,26 @@ namespace Bloomy.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
 
-                    b.Property<int?>("ProductId")
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ReviewId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Review");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.Tag", b =>
@@ -348,6 +551,65 @@ namespace Bloomy.Api.Migrations
                     b.ToTable("Tags");
                 });
 
+            modelBuilder.Entity("Bloomy.Api.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            CreatedAt = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5192),
+                            Email = "admin@bloomy.com",
+                            FullName = "Admin User",
+                            PasswordHash = "123456",
+                            Role = "Admin"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            CreatedAt = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5196),
+                            Email = "sara@bloomy.com",
+                            FullName = "سارة",
+                            PasswordHash = "123456",
+                            Role = "Customer"
+                        });
+                });
+
             modelBuilder.Entity("ProductTag", b =>
                 {
                     b.Property<int>("ProductsProductId")
@@ -363,25 +625,77 @@ namespace Bloomy.Api.Migrations
                     b.ToTable("ProductTag");
                 });
 
+            modelBuilder.Entity("Bloomy.Api.Models.Address", b =>
+                {
+                    b.HasOne("Bloomy.Api.Models.User", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Bloomy.Api.Models.CartItem", b =>
                 {
                     b.HasOne("Bloomy.Api.Models.Product", null)
                         .WithMany("CartItems")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bloomy.Api.Models.User", "User")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.Favorite", b =>
                 {
                     b.HasOne("Bloomy.Api.Models.Product", null)
                         .WithMany("Favorites")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bloomy.Api.Models.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bloomy.Api.Models.Order", b =>
+                {
+                    b.HasOne("Bloomy.Api.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.OrderItem", b =>
                 {
+                    b.HasOne("Bloomy.Api.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Bloomy.Api.Models.Product", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.PriceOffer", b =>
@@ -443,7 +757,17 @@ namespace Bloomy.Api.Migrations
                 {
                     b.HasOne("Bloomy.Api.Models.Product", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bloomy.Api.Models.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProductTag", b =>
@@ -466,6 +790,11 @@ namespace Bloomy.Api.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Bloomy.Api.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("Bloomy.Api.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
@@ -481,6 +810,19 @@ namespace Bloomy.Api.Migrations
                     b.Navigation("ProductImages");
 
                     b.Navigation("ProductSizes");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Bloomy.Api.Models.User", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("CartItems");
+
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
                 });

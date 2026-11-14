@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bloomy.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33ffb0340312bfe964a41a4916fd6e4c387d4f65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52255a14a33fd33f89d6402662a98efa67a897fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bloomy.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bloomy.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
