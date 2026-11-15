@@ -1,7 +1,7 @@
 using Bloomy.Api.Services;
 using Bloomy.Api.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Bloomy.Api.Services.Products;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -19,7 +19,9 @@ builder.Services.AddDbContext<BloomyDbContext>(options =>
 
 // ===== Users services (Student 5) =====
 builder.Services.AddScoped<IUserService, UserService>();
-
+// ===== Products & Categories services (Student 2) =====
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 // CORS Policy
 builder.Services.AddCors(options =>
 {
