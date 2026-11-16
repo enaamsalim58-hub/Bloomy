@@ -1,8 +1,6 @@
-using Bloomy.Api.Data;
-using Bloomy.Api.DTOs;
-using Bloomy.Api.Models;
+using Bloomy.Api.DTOs.Categories;
+using Bloomy.Api.Services.Products;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bloomy.Api.Controllers
 {
@@ -10,105 +8,55 @@ namespace Bloomy.Api.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly BloomyDbContext _context;
+        private readonly ICategoryService _service;
 
-        public CategoriesController(BloomyDbContext context)
+        public CategoriesController(ICategoryService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryResponseDTO>>> GetCategories()
         {
-            var categories = await _context.Categories
-                .Select(c => new CategoryDto
-                {
-                    CategoryId = c.CategoryId,
-                    Name = c.Name,
-                    ImageUrl = c.ImageUrl
-                })
-                .ToListAsync();
-
-            return categories;
+            var categories = await _service.GetAllAsync();
+            return Ok(categories);
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDto>> GetCategory(int id)
+        public async Task<ActionResult<CategoryResponseDTO>> GetCategory(int id)
         {
-            var categoryDto = await _context.Categories
-                .Where(c => c.CategoryId == id)
-                .Select(c => new CategoryDto
-                {
-                    CategoryId = c.CategoryId,
-                    Name = c.Name,
-                    ImageUrl = c.ImageUrl
-                })
-                .FirstOrDefaultAsync();
+            var category = await _service.GetByIdAsync(id);
 
-            if (categoryDto == null)
-            {
+            if (category == null)
                 return NotFound();
-            }
 
-            return categoryDto;
+            return Ok(category);
         }
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> PostCategory(CategoryCreateDto createDto)
+        public async Task<ActionResult<CategoryResponseDTO>> PostCategory(
+            CreateCategoryDTO dto)
         {
-            var category = new Category
-            {
-                Name = createDto.Name,
-                ImageUrl = createDto.ImageUrl
-            };
+            var category = await _service.CreateAsync(dto);
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            var categoryDto = new CategoryDto
-            {
-                CategoryId = category.CategoryId,
-                Name = category.Name,
-                ImageUrl = category.ImageUrl
-            };
-
-            return CreatedAtAction(nameof(GetCategory), new { id = category.CategoryId }, categoryDto);
+            return CreatedAtAction(
+                nameof(GetCategory),
+                new { id = category.CategoryId },
+                category);
         }
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, CategoryCreateDto updateDto)
+        public async Task<IActionResult> PutCategory(
+            int id, UpdateCategoryDTO dto)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
+            var updated = await _service.UpdateAsync(id, dto);
+
+            if (!updated)
                 return NotFound();
-            }
-
-            // تحديث البيانات
-            category.Name = updateDto.Name;
-            category.ImageUrl = updateDto.ImageUrl;
-
-            _context.Entry(category).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Categories.Any(e => e.CategoryId == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return NoContent();
         }
@@ -117,25 +65,18 @@ namespace Bloomy.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories
-                .Include(c => c.Products) // جلب المنتجات المرتبطة بالقسم للتحقق منها
-                .FirstOrDefaultAsync(c => c.CategoryId == id);
+            var category = await _service.GetByIdAsync(id);
 
             if (category == null)
-            {
                 return NotFound();
-            }
 
-            // التحقق مما إذا كان القسم يحتوي على منتجات بداخله
-            if (category.Products != null && category.Products.Any())
-            {
-                return BadRequest("لا يمكن حذف هذا القسم لأنه يحتوي على منتجات. يجب حذف المنتجات المرتبطة به أولاً.");
-            }
+            var deleted = await _service.DeleteAsync(id);
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            if (!deleted)
+                return BadRequest(
+                    "لا يمكن حذف التصنيف لأنه يحتوي على منتجات.");
 
-            return NoContent(); // تم الحذف بنجاح
+            return NoContent();
         }
     }
 }
