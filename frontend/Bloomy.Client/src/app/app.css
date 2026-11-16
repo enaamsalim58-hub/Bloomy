@@ -1,0 +1,721 @@
+
+/* =====================================
+   1. إعدادات الصفحة العامة
+===================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Cairo", "Tahoma", sans-serif;
+}
+
+.store-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+
+  background-color: #fbf8fc;
+  color: #741c78;
+
+  direction: rtl;
+}
+
+
+/* =====================================
+   2. الشريط العلوي NAVBAR
+===================================== */
+
+.navbar {
+  width: 100%;
+  height: 66px;
+
+  padding: 0 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #ffffff;
+
+  box-shadow: 0 3px 12px rgba(102, 45, 112, 0.10);
+
+  position: relative;
+  z-index: 10;
+}
+
+
+/* الشعار */
+
+.logo {
+  width: 115px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-decoration: none;
+}
+
+.logo img {
+  width: 105px;
+  max-height: 48px;
+
+  object-fit: contain;
+}
+.logo-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #9879bd;
+}
+
+
+/* روابط القائمة */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 27px;
+}
+
+.nav-links a {
+  position: relative;
+
+  color: #29202d;
+  text-decoration: none;
+
+  font-family: "Cairo", "Tahoma", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: color 0.25s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #861b87;
+}
+
+
+/* الخط أسفل الرابط النشط */
+
+.nav-links a.active::after {
+  content: "";
+
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background-color: #922b94;
+  border-radius: 5px;
+}
+
+
+/* أيقونات الحساب والسلة */
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-icon {
+  width: 28px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-icon img {
+  width: 25px;
+  height: 25px;
+
+  object-fit: contain;
+}
+
+
+/* رقم المنتجات في السلة */
+
+.cart-count {
+  position: absolute;
+
+  top: -6px;
+  right: -7px;
+
+  width: 16px;
+  height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #951b91;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: bold;
+
+  border-radius: 50%;
+}
+
+
+/* =====================================
+   3. البانر الرئيسي HERO
+===================================== */
+
+.hero {
+  width: 100%;
+  height: 255px;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  /* مسافة فاصلة بين البانر وخلفية الأقسام */
+
+  margin-bottom: 30px;
+
+
+  /*
+    خلفية البانر التي ستضيفينها.
+    اجعليها صورة عريضة.
+  */
+
+  background-image: url('/images/hero-bg.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-color: #f0dff2;
+}
+
+
+/* مساحة باقة الورد */
+
+.hero-image {
+  width: 61%;
+  height: 100%;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+}
+
+
+/* صورة الباقة */
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: left center;
+
+  display: block;
+}
+
+
+/* النص الموجود في يمين البانر */
+
+.hero-content {
+  width: 43%;
+
+  position: absolute;
+  right: 4%;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 2;
+
+  text-align: right;
+  direction: rtl;
+
+  padding: 0 5px;
+}
+
+
+/* العنوان الرئيسي */
+
+.hero-content h1 {
+  color: #851c83;
+
+  font-family: "Cairo", "Tahoma", sans-serif;
+  font-size: 29px;
+  font-weight: 900;
+
+  line-height: 1.65;
+
+  margin-bottom: 7px;
+}
+
+
+/* وصف البانر */
+
+.hero-content p {
+  color: #852487;
+
+  font-family: "Cairo", "Tahoma", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.9;
+
+  margin-bottom: 14px;
+}
+
+
+/* زر التسوق */
+
+.shop-button {
+  min-width: 130px;
+  height: 36px;
+
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border: none;
+  border-radius: 18px 5px 5px 18px;
+
+  background: linear-gradient(
+    100deg,
+    #a64ca8,
+    #87338f
+  );
+
+  color: #ffffff;
+
+  font-family: "Cairo", "Tahoma", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 9px rgba(118, 38, 126, 0.18);
+
+  transition: 0.25s ease;
+}
+
+.shop-button:hover {
+  background: #76227e;
+  transform: translateY(-2px);
+}
+
+.button-arrow {
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+/* نقاط أسفل البانر */
+
+.slider-dots {
+  position: absolute;
+
+  bottom: 13px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  z-index: 3;
+}
+
+.slider-dots span {
+  width: 10px;
+  height: 10px;
+
+  background-color: rgba(255, 255, 255, 0.9);
+
+  border-radius: 50%;
+}
+
+.slider-dots span.selected {
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+
+/* =====================================
+   4. خلفية الأقسام
+===================================== */
+
+.categories {
+  width: 100%;
+  min-height: 112px;
+
+  padding: 14px 7%;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  /*
+    صورة خلفية مستقلة أسفل البانر.
+  */
+
+  background-image: url('/images/categories-bg.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-color: #f5eafa;
+}
+
+
+/* =====================================
+   5. بطاقات الأقسام
+===================================== */
+
+.category-card {
+  min-width: 0;
+  min-height: 96px;
+
+  padding: 7px 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  text-decoration: none;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(224, 208, 231, 0.8);
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 3px 10px rgba(100, 62, 110, 0.08),
+    inset 0 0 8px rgba(255, 255, 255, 0.5);
+
+  transition: 0.25s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+
+  background-color: rgba(255, 255, 255, 0.95);
+
+  box-shadow: 0 7px 16px rgba(100, 62, 110, 0.14);
+}
+
+
+/* مكان صورة القسم */
+
+.category-image {
+  width: 65px;
+  height: 59px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 2px;
+}
+
+
+/* صورة الهدية والشوكولاتة والدمي والورود */
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+
+/* اسم القسم */
+
+.category-card h3 {
+  color: #241b27;
+
+  font-family: "Cairo", "Tahoma", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+
+/* =====================================
+   6. قسم المنتجات أسفل الصفحة
+===================================== */
+
+.products-section {
+  width: 100%;
+  min-height: 180px;
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  background-color: #fbf8fc;
+}
+
+.products-section h2 {
+  color: #851c83;
+  font-size: 24px;
+  font-weight: 900;
+
+  margin-bottom: 10px;
+}
+
+.products-section p {
+  color: #806786;
+  font-size: 14px;
+}
+
+
+/* =====================================
+   7. الشاشات المتوسطة
+===================================== */
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+  .navbar {
+    padding: 0 15px;
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .hero-content h1 {
+    font-size: 25px;
+  }
+
+  .hero-image {
+    width: 62%;
+  }
+
+  .categories {
+    padding-right: 4%;
+    padding-left: 4%;
+    gap: 10px;
+  }
+
+}
+
+
+/* =====================================
+   8. الهواتف
+===================================== */
+
+@media (max-width: 600px) {
+
+  .navbar {
+    height: 57px;
+    padding: 0 9px;
+    gap: 5px;
+  }
+
+  .logo {
+    width: 72px;
+    flex-shrink: 0;
+  }
+
+  .logo img {
+    width: 70px;
+    max-height: 40px;
+  }
+
+  .nav-links {
+    flex: 1;
+
+    gap: 11px;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+  }
+
+  .nav-links a.active::after {
+    bottom: -5px;
+  }
+
+  .nav-icons {
+    gap: 9px;
+    flex-shrink: 0;
+  }
+
+  .nav-icon {
+    width: 22px;
+    height: 25px;
+  }
+
+  .nav-icon img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .cart-count {
+    width: 14px;
+    height: 14px;
+    font-size: 8px;
+  }
+
+
+  /* البانر على الهاتف */
+
+  .hero {
+    height: 255px;
+  }
+
+  .hero-image {
+    width: 62%;
+  }
+
+  .hero-image img {
+    object-position: left center;
+  }
+
+  .hero-content {
+    width: 42%;
+    right: 3%;
+  }
+
+  .hero-content h1 {
+    font-size: 21px;
+    line-height: 1.65;
+    margin-bottom: 7px;
+  }
+
+  .hero-content p {
+    font-size: 12px;
+    line-height: 1.9;
+    margin-bottom: 11px;
+  }
+
+  .shop-button {
+    min-width: 112px;
+    height: 32px;
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .button-arrow {
+    font-size: 17px;
+  }
+
+
+  /* الأقسام على الهاتف */
+
+  .categories {
+    min-height: 112px;
+
+    padding: 13px 7%;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .category-card {
+    min-height: 96px;
+    padding: 6px 3px;
+    border-radius: 14px;
+  }
+
+  .category-image {
+    width: 55px;
+    height: 56px;
+  }
+
+  .category-card h3 {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =====================================
+   9. الهواتف الصغيرة جداً
+===================================== */
+
+@media (max-width: 370px) {
+
+  .nav-links {
+    gap: 7px;
+  }
+
+  .nav-links a {
+    font-size: 9px;
+  }
+
+  .logo {
+    width: 62px;
+  }
+
+  .logo img {
+    width: 60px;
+  }
+
+  .nav-icons {
+    gap: 5px;
+  }
+
+  .hero-content h1 {
+    font-size: 18px;
+  }
+
+  .hero-content p {
+    font-size: 10px;
+  }
+
+  .category-image {
+    width: 46px;
+    height: 50px;
+  }
+
+  .category-card h3 {
+    font-size: 10px;
+  }
+
+}
