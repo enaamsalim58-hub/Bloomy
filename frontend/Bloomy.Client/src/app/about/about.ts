@@ -1,9 +1,14 @@
+
+
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  imports: [],
   selector: 'app-about',
-  styleUrl: './about.css',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './about.html',
+  styleUrls: ['./about.css']
 })
 export class About {}

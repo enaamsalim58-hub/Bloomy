@@ -1,4 +1,4 @@
-<!-- <div class="products-page" dir="rtl">
+<div class="products-page" dir="rtl">
 
   <header class="products-header">
     <a routerLink="/" class="logo">
@@ -12,7 +12,7 @@
       <a routerLink="/contact">تواصل معنا</a>
     </nav>
 
-    <a routerLink="/products" class="cart">🛒</a>
+    <a routerLink="/cart" class="cart">🛒</a>
   </header>
 
   <section class="products-hero">
@@ -84,79 +84,5 @@
     </div>
 
   </main>
-</div> -->
-
-\<div class="products-page" dir="rtl">
-
-&#x20; \<header class="products-header">     \<a routerLink="/" class="logo">       \<img src="/Images/logo.jpeg" alt="Bloomy">       \<span>Bloomy\</span>     \</a>
-
-```
-<nav>
-  <a routerLink="/">الرئيسية</a>
-  <a routerLink="/products" class="active">المنتجات</a>
-  <a routerLink="/contact">تواصل معنا</a>
-</nav>
-
-<a routerLink="/cart" class="cart">
-  🛒
-  <span>{{ cartService.itemsCount }}</span>
-</a>
-```
-
-&#x20; \</header>
-
-&#x20; \<section class="products-hero">     \<h1>اكتشفي عالم Bloomy\</h1>     \<p>اختاري أجمل الورود والهدايا لمن تحبين\</p>   \</section>
-
-&#x20; \<main class="products-content">
-
-```
-<div class="section-heading">
-  <h2>تسوقي حسب التصنيف</h2>
-  <p>اختاري التصنيف المفضل لديكِ</p>
 </div>
 
-<div class="categories">
-  <button>🌹 باقات الورود</button>
-  <button>🎁 الهدايا</button>
-  <button>🍫 الشوكولاتة</button>
-  <button>🧸 الدمى</button>
-</div>
-
-<div class="section-heading">
-  <h2>منتجاتنا المميزة</h2>
-  <p>اختيارات جميلة لكل مناسباتك</p>
-</div>
-
-<div class="products-grid">
-
-  @for (product of products; track product.productId) {
-    <article class="product-card">
-
-      <img [src]="product.image" [alt]="product.name">
-
-      <div class="product-info">
-
-        <h3>{{ product.name }}</h3>
-
-        <p>{{ product.description }}</p>
-
-        <strong>{{ product.price }} ر.س</strong>
-
-        <a [routerLink]="['/product', product.productId]">
-          عرض التفاصيل
-        </a>
-
-        <button
-          class="add-cart-btn"
-          (click)="addToCart(product)">
-          🛒 أضيفي إلى السلة
-        </button>
-
-      </div>
-    </article>
-  }
-
-</div>
-```
-
-&#x20; \</main> \</div>

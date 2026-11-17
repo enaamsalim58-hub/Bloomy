@@ -293,4 +293,9 @@
   padding: 4px 9px;
   border-radius: 50%;
 }
+
+.add-btn { width: 100%; background: #994b94; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; margin-top: 10px; font-family: inherit; font-weight: bold; }
+.add-btn:hover { background: #71346f; }
+.product-info a { display: block; text-align: center; margin-top: 8px; color: #994b94; text-decoration: none; font-size: 13px; }
+.add-btn { width: 100%; background: #994b94; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; margin-top: 10px; font-family: inherit; font-weight: bold; }
 }

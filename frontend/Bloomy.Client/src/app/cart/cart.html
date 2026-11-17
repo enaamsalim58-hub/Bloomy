@@ -1,390 +1,52 @@
-<!-- <p>cart works!</p> -->
-
-<!-- <div class="cart-page">
-
-  <div class="cart-header">
-    <div>
-      <h1>My Shopping Cart</h1>
-      <p>Lovely things are waiting for you 💜</p>
-    </div>
-
-    <span class="cart-count">
-      {{ cartItems.length }} Items
-    </span>
-  </div>
-
-  <div class="cart-content">
-
-    <div class="cart-products">
-
-      <div class="products-heading">
-        <h2>Your Items</h2>
-
-        <button
-          class="clear-btn"
-          *ngIf="cartItems.length > 0"
-          (click)="clearCart()">
-          Clear Cart
-        </button>
-      </div>
-
-      <div class="empty-cart" *ngIf="cartItems.length === 0">
-        <div class="empty-icon">🛍️</div>
-        <h2>Your cart is empty</h2>
-        <p>Discover something beautiful at Bloomy!</p>
-      </div>
-
-      <div class="cart-item" *ngFor="let item of cartItems">
-
-        <img [src]="item.image" [alt]="item.name">
-
-        <div class="item-details">
-          <span class="category">{{ item.category }}</span>
-          <h3>{{ item.name }}</h3>
-          <p>{{ item.description }}</p>
-
-          <div class="quantity-control">
-            <button (click)="decrease(item)">−</button>
-            <span>{{ item.quantity }}</span>
-            <button (click)="increase(item)">+</button>
-          </div>
-        </div>
-
-        <div class="item-price">
-          <strong>${{ item.price * item.quantity }}</strong>
-
-          <button
-            class="remove-btn"
-            (click)="removeItem(item.id)">
-            Remove
-          </button>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="summary-card">
-
-      <h2>Order Summary</h2>
-
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <strong>${{ subtotal }}</strong>
-      </div>
-
-      <div class="summary-row">
-        <span>Delivery Fee</span>
-        <strong>${{ cartItems.length > 0 ? deliveryFee : 0 }}</strong>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="total-row">
-        <span>Total</span>
-        <strong>${{ total }}</strong>
-      </div>
-
-      <button
-        class="checkout-btn"
-        [disabled]="cartItems.length === 0"
-        (click)="checkout()">
-        Proceed to Checkout →
-      </button>
-
-      <p class="secure-text">♡ Thank you for choosing Bloomy</p>
-
-    </div>
-
-  </div>
-
-</div> -->
-
-
-
-<!-- <div class="cart-page" dir="rtl">
-
+<div class="store-page" dir="rtl">
   <header class="navbar">
-    <a class="logo" routerLink="/">
-      <img src="/Images/logo.jpeg" alt="Bloomy">
-      <span>Bloomy</span>
-    </a>
-
-    <nav class="nav-links">
+    <a routerLink="/" class="logo"><img src="/Images/logo.jpeg" alt="Bloomy"><span>Bloomy</span></a>
+    <nav>
       <a routerLink="/">الرئيسية</a>
       <a routerLink="/products">المنتجات</a>
-      <a routerLink="/offers">العروض</a>
       <a routerLink="/contact">تواصل معنا</a>
     </nav>
-
-    <a routerLink="/cart" class="cart-icon">
-      🛒 <span>{{ itemsCount }}</span>
-    </a>
+    <div class="nav-actions">
+      <a routerLink="/cart" class="icon-link cart-icon">🛒</a>
+      <a routerLink="/contact" class="icon-link user-icon">👤</a>
+    </div>
   </header>
 
-  <section class="page-heading">
-    <h1>سلة مشترياتك ♡</h1>
-    <p>كل اختياراتك الجميلة في مكان واحد</p>
-  </section>
+  <main class="cart-page">
+    <h1>سلة التسوق 🛒</h1>
 
-  <main class="cart-layout">
+    <div *ngIf="cartItems.length === 0" class="empty">سلتك فارغة، روحي للمنتجات وضيفي 🌸</div>
 
-    <section class="products-area">
-
-      <div class="section-title">
-        <h2>منتجاتك المختارة</h2>
-
-        @if (cartItems.length > 0) {
-          <button class="clear-btn" (click)="clearCart()">
-            إفراغ السلة
-          </button>
-        }
+    <div class="cart-layout" *ngIf="cartItems.length > 0">
+      <div class="items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <img [src]="item.imageUrl" [alt]="item.productName">
+          <div class="info">
+            <h3>{{ item.productName }}</h3>
+            <p>{{ item.sizeName }} - {{ item.colorName }}</p>
+            <strong>{{ item.unitPrice }} ر.س</strong>
+          </div>
+          <div class="qty">
+            <button (click)="increase(item)">+</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="decrease(item)">-</button>
+          </div>
+          <button class="remove" (click)="removeItem(item)">✕</button>
+        </div>
       </div>
 
-      @if (cartItems.length > 0) {
-
-        @for (item of cartItems; track item.id) {
-          <article class="product-card">
-
-            <img class="product-img"
-                 [src]="item.image"
-                 [alt]="item.name">
-
-            <div class="product-details">
-              <span class="category">{{ item.category }}</span>
-              <h3>{{ item.name }}</h3>
-              <p>{{ item.description }}</p>
-
-              <div class="quantity">
-                <button (click)="decrease(item)"
-                        [disabled]="item.quantity === 1">−</button>
-                <span>{{ item.quantity }}</span>
-                <button (click)="increase(item)">+</button>
-              </div>
-            </div>
-
-            <div class="product-price">
-              <button class="delete-btn"
-                      (click)="removeItem(item.id)">×</button>
-              <strong>{{ item.price * item.quantity | number }} ر.ي</strong>
-            </div>
-
-          </article>
-        }
-
-      } @else {
-        <div class="empty-cart">
-          <div>🛍️</div>
-          <h2>سلتك فارغة</h2>
-          <p>اكتشفي منتجات Bloomy وأضيفي ما يعجبك!</p>
-          <a routerLink="/products" class="shop-btn">
-            تصفحي المنتجات
-          </a>
-        </div>
-      }
-
-    </section>
-
-    @if (cartItems.length > 0) {
-      <aside class="summary">
-
-        <h2>ملخص الطلب</h2>
-
-        <div class="summary-line">
-          <span>عدد المنتجات</span>
-          <strong>{{ itemsCount }}</strong>
-        </div>
-
-        <div class="summary-line">
-          <span>المجموع الفرعي</span>
-          <strong>{{ subtotal | number }} ر.ي</strong>
-        </div>
-
-        <div class="summary-line">
-          <span>رسوم التوصيل</span>
-          <strong>{{ deliveryFee | number }} ر.ي</strong>
-        </div>
-
-        <div class="summary-total">
-          <span>الإجمالي</span>
-          <strong>{{ total | number }} ر.ي</strong>
-        </div>
-
-        <button class="checkout-btn" disabled>
-          إتمام الطلب قريباً
-        </button>
-
-        <a routerLink="/products" class="continue-btn">
-          متابعة التسوق
-        </a>
-
-        <p class="thank-you">شكراً لاختيارك Bloomy ♡</p>
-
-      </aside>
-    }
-
+      <div class="checkout-box">
+        <h2>إتمام الطلب</h2>
+        <label>اسم المستلم<input [(ngModel)]="checkout.receiverName" placeholder="الاسم"></label>
+        <label>رقم الجوال<input [(ngModel)]="checkout.receiverPhone" placeholder="05xxxxxxxx"></label>
+        <label>عنوان التوصيل<input [(ngModel)]="checkout.deliveryAddress" placeholder="العنوان"></label>
+        <div class="row"><span>المجموع</span><span>{{ checkout.subtotal }} ر.س</span></div>
+        <div class="row"><span>التوصيل</span><span>{{ checkout.deliveryFee }} ر.س</span></div>
+        <div class="row total"><span>الإجمالي</span><span>{{ checkout.total }} ر.س</span></div>
+        <button class="confirm" (click)="confirmOrder()">تأكيد الطلب</button>
+      </div>
+    </div>
   </main>
 
-  <footer class="footer">
-    Bloomy ♡ لأن اللحظات الجميلة تستحق هدية جميلة
-  </footer>
-
-</div> -->
-
-
-
-\<div class="cart-page" dir="rtl">
-
-&#x20; \<header class="navbar">     \<a class="logo" routerLink="/">       \<img src="/Images/logo.jpeg" alt="Bloomy">       \<span>Bloomy\</span>     \</a>
-
-```
-<nav class="nav-links">
-  <a routerLink="/">الرئيسية</a>
-  <a routerLink="/products">المنتجات</a>
-  <a routerLink="/offers">العروض</a>
-  <a routerLink="/contact">تواصل معنا</a>
-</nav>
-
-<a routerLink="/cart" class="cart-icon">
-  🛒 <span>{{ itemsCount }}</span>
-</a>
-```
-
-&#x20; \</header>
-
-&#x20; \<section class="page-heading">     \<h1>سلة مشترياتك ♡\</h1>     \<p>كل اختياراتك الجميلة في مكان واحد\</p>   \</section>
-
-&#x20; \<main class="cart-layout">
-
-```
-<section class="products-area">
-
-  <div class="section-title">
-    <h2>منتجاتك المختارة</h2>
-
-    @if (cartItems.length > 0) {
-      <button class="clear-btn" (click)="clearCart()">
-        إفراغ السلة
-      </button>
-    }
-  </div>
-
-  @if (cartItems.length > 0) {
-
-    @for (item of cartItems; track item.product.productId) {
-
-      <article class="product-card">
-
-        <img
-          class="product-img"
-          [src]="item.product.image"
-          [alt]="item.product.name">
-
-        <div class="product-details">
-
-          <span class="category">
-            {{ item.product.categoryName }}
-          </span>
-
-          <h3>{{ item.product.name }}</h3>
-
-          <p>{{ item.product.description }}</p>
-
-          <div class="quantity">
-            <button
-              (click)="decrease(item)"
-              [disabled]="item.quantity === 1">
-              −
-            </button>
-
-            <span>{{ item.quantity }}</span>
-
-            <button (click)="increase(item)">+</button>
-          </div>
-
-        </div>
-
-        <div class="product-price">
-
-          <button
-            class="delete-btn"
-            (click)="removeItem(item.product.productId)">
-            ×
-          </button>
-
-          <strong>
-            {{ item.product.price * item.quantity | number }} ر.ي
-          </strong>
-
-        </div>
-
-      </article>
-
-    }
-
-  } @else {
-
-    <div class="empty-cart">
-      <div>🛍️</div>
-      <h2>سلتك فارغة</h2>
-      <p>اكتشفي منتجات Bloomy وأضيفي ما يعجبك!</p>
-
-      <a routerLink="/products" class="shop-btn">
-        تصفحي المنتجات
-      </a>
-    </div>
-
-  }
-
-</section>
-
-@if (cartItems.length > 0) {
-
-  <aside class="summary">
-
-    <h2>ملخص الطلب</h2>
-
-    <div class="summary-line">
-      <span>عدد المنتجات</span>
-      <strong>{{ itemsCount }}</strong>
-    </div>
-
-    <div class="summary-line">
-      <span>المجموع الفرعي</span>
-      <strong>{{ subtotal | number }} ر.ي</strong>
-    </div>
-
-    <div class="summary-line">
-      <span>رسوم التوصيل</span>
-      <strong>{{ deliveryFee | number }} ر.ي</strong>
-    </div>
-
-    <div class="summary-total">
-      <span>الإجمالي</span>
-      <strong>{{ total | number }} ر.ي</strong>
-    </div>
-
-    <button class="checkout-btn" disabled>
-      إتمام الطلب قريباً
-    </button>
-
-    <a routerLink="/products" class="continue-btn">
-      متابعة التسوق
-    </a>
-
-    <p class="thank-you">
-      شكراً لاختيارك Bloomy ♡
-    </p>
-
-  </aside>
-
-}
-```
-
-&#x20; \</main>
-
-&#x20; \<footer class="footer">
-&#x20;   Bloomy ♡ لأن اللحظات الجميلة تستحق هدية جميلة
-&#x20; \</footer>
-
-\</div>
+  <footer class="footer"><p>© 2026 Bloomy - جميع الحقوق محفوظة 🌸</p></footer>
+</div>

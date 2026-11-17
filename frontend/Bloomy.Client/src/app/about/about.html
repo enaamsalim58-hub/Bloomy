@@ -1,4 +1,44 @@
-
+<!-- 
 <h1>This is About</h1>
 
-<p>Welcome to Bloomy Flower Shop 🌸</p>
+<p>Welcome to Bloomy Flower Shop 🌸</p> -->
+
+<div class="about-page" dir="rtl">
+  <header class="products-header">
+    <a routerLink="/" class="logo"><img src="/Images/logo.jpeg" alt="Bloomy"><span>Bloomy</span></a>
+    <nav>
+      <a routerLink="/">الرئيسية</a>
+      <a routerLink="/products">المنتجات</a>
+      <a routerLink="/about" class="active">من نحن</a>
+      <a routerLink="/contact">تواصل معنا</a>
+    </nav>
+    <!-- أيقونة السلة - تودي لـ /cart -->
+    <a routerLink="/cart" class="cart">🛒</a>
+  </header>
+
+  <section class="about-hero">
+    <h1>من نحن 🌸</h1>
+    <p>في Bloomy، نؤمن ان الورد مو بس هدية، هو رسالة حب</p>
+  </section>
+
+  <main class="about-content">
+    <div class="about-card">
+      <h2>قصتنا</h2>
+      <p>بدأنا Bloomy بحب للورد والهدايا، ونوصل لك أجمل الباقات والشوكولاتة والدمى، بتغليف أنيق يوصل مشاعرك بأجمل طريقة.</p>
+    </div>
+
+    <div class="about-card">
+      <h2>وش نقدم؟</h2>
+      <p>🌹 باقات ورود فاخرة<br>🎁 صناديق هدايا<br>🍫 شوكولاتة فاخرة<br>🧸 دمى لطيفة</p>
+    </div>
+
+    <div class="about-card">
+      <h2>ليش Bloomy؟</h2>
+      <p>توصيل سريع، تغليف أنيق، وأسعار تناسب الكل. اختاري هديتك، ونحن نوصلها بكل حب.</p>
+      <a routerLink="/products" class="cta">تسوقي الآن</a>
+    </div>
+  </main>
+
+  <footer class="footer"><p>© 2026 Bloomy - جميع الحقوق محفوظة 🌸</p></footer>
+</div>
+
