@@ -1,0 +1,197 @@
+<div class="admin-layout" dir="rtl">
+
+  <!-- القائمة الجانبية -->
+  <aside class="admin-sidebar">
+
+    <div class="brand">
+      <span class="logo-icon">🌸</span>
+      <h2>Bloomy</h2>
+    </div>
+
+    <nav class="admin-nav">
+      <a class="nav-item active" routerLink="/dashboard">
+        🏠 لوحة التحكم
+      </a>
+
+      <a class="nav-item" routerLink="/manage-products">
+        💐 المنتجات
+      </a>
+
+      <a class="nav-item">
+        📦 الطلبات
+      </a>
+
+      <a class="nav-item">
+        👥 العملاء
+      </a>
+
+      <a class="nav-item">
+        📊 التقارير
+      </a>
+
+      <a class="nav-item">
+        ⚙️ الإعدادات
+      </a>
+    </nav>
+
+  </aside>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="admin-main">
+
+    <header class="topbar">
+      <h1>مرحباً، مدير النظام</h1>
+      <button class="notif-btn">🔔</button>
+    </header>
+
+    <!-- بطاقات الإحصائيات -->
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div>
+          <span class="stat-label">إجمالي المبيعات</span>
+          <h3>{{ stats.totalSales | number }} ر.س</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🛒</div>
+        <div>
+          <span class="stat-label">عدد الطلبات</span>
+          <h3>{{ stats.totalOrders }}</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <span class="stat-label">عدد العملاء</span>
+          <h3>{{ stats.totalCustomers }}</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🎁</div>
+        <div>
+          <span class="stat-label">عدد المنتجات</span>
+          <h3>{{ stats.totalProducts }}</h3>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- الرسوم البيانية -->
+    <section class="charts-grid">
+
+      <!-- حالة الطلبات -->
+      <div class="panel-card">
+
+        <h3>حالة الطلبات</h3>
+
+        <div class="donut-layout">
+
+          <div class="donut-ring">
+            <div class="donut-inner">
+              <strong>{{ stats.totalOrders }}</strong>
+              <span>طلب</span>
+            </div>
+          </div>
+
+          <ul class="legend-list">
+            <li *ngFor="let item of orderStatusSummary">
+              <span
+                class="dot"
+                [style.background]="item.color">
+              </span>
+
+              <span>{{ item.count }} {{ item.label }}</span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- المبيعات الشهرية -->
+      <div class="panel-card">
+
+        <h3>المبيعات الشهرية</h3>
+
+        <div class="bar-chart">
+
+          <div class="bar-col" *ngFor="let m of monthlySales">
+
+            <span class="bar-val">
+              {{ m.amount | number }}
+            </span>
+
+            <div
+              class="bar-fill"
+              [style.height.%]="m.percent">
+            </div>
+
+            <span class="bar-label">
+              {{ m.month }}
+            </span>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- جدول أحدث الطلبات -->
+    <section class="panel-card table-section">
+
+      <h3>أحدث الطلبات</h3>
+
+      <div class="table-responsive">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>رقم الطلب</th>
+              <th>اسم العميل</th>
+              <th>التاريخ</th>
+              <th>الحالة</th>
+              <th>الإجمالي</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let order of recentOrders">
+
+              <td>
+                <strong>#{{ order.orderId }}</strong>
+              </td>
+
+              <td>{{ order.receiverName }}</td>
+
+              <td>{{ order.orderDate }}</td>
+
+              <td>
+                <span class="badge">
+                  {{ order.status }}
+                </span>
+              </td>
+
+              <td class="price-cell">
+                {{ order.total }} ر.س
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

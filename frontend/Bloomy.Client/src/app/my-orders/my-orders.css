@@ -1,0 +1,466 @@
+/* ==============================
+   إعدادات الصفحة العامة
+============================== */
+
+:host {
+  display: block;
+  font-family: "Cairo", Tahoma, sans-serif;
+  color: #452b4c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.orders-page {
+  min-height: 100vh;
+  padding: 25px;
+  background: linear-gradient(135deg, #faf5ff, #f5eafa);
+  direction: rtl;
+}
+
+/* ==============================
+   عنوان الصفحة
+============================== */
+
+.page-title {
+  width: fit-content;
+  margin: 0 auto 25px;
+  padding: 12px 45px;
+  border-radius: 35px;
+  background: linear-gradient(90deg, #a84da5, #74358d);
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(132, 57, 145, 0.15);
+}
+
+.page-title span {
+  margin-left: 15px;
+  font-size: 30px;
+}
+
+/* ==============================
+   الحاوية الرئيسية
+============================== */
+
+.orders-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 650px;
+  overflow: hidden;
+  direction: rtl;
+  border: 1px solid #e8d8ed;
+  border-radius: 25px;
+  background: #fffafd;
+  box-shadow: 0 5px 20px rgba(103, 51, 119, 0.08);
+}
+
+/* ==============================
+   القائمة الجانبية
+============================== */
+
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  padding: 28px 17px;
+  background: linear-gradient(180deg, #f8edfa, #f1e2f7);
+  border-left: 1px solid #ead8ef;
+}
+
+.profile {
+  margin-bottom: 30px;
+  padding-bottom: 22px;
+  text-align: center;
+  border-bottom: 1px solid #e6d2eb;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 78px;
+  height: 78px;
+  margin: auto;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: #ead1f0;
+  font-size: 38px;
+  box-shadow: 0 4px 12px rgba(120, 60, 140, 0.15);
+}
+
+.profile h3 {
+  margin: 12px 0 0;
+  color: #452b4c;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+/* أزرار القائمة الجانبية */
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.side-menu button {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 15px;
+
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+
+  color: #452b4c;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.side-menu button:hover {
+  background: #ead7f0;
+  color: #873b91;
+  transform: translateX(-3px);
+}
+
+.side-menu button.active {
+  background: linear-gradient(100deg, #b65bb0, #853d99);
+  color: white;
+  box-shadow: 0 4px 12px rgba(153, 75, 148, 0.22);
+}
+
+.side-menu button:focus-visible {
+  outline: 2px solid #994b94;
+  outline-offset: 3px;
+}
+
+/* ==============================
+   المحتوى الرئيسي
+============================== */
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+  background: #fffafd;
+}
+
+.main-content h2 {
+  margin: 0 0 25px;
+  color: #4d245d;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* ==============================
+   تبويبات الطلبات
+============================== */
+
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eaddec;
+}
+
+.tabs button {
+  padding: 12px 15px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #57365e;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabs button:hover {
+  color: #a64fa7;
+}
+
+.tabs button.selected {
+  border-bottom-color: #a64fa7;
+  color: #8d3d96;
+}
+
+/* ==============================
+   بطاقات الطلبات
+============================== */
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.order-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 80px;
+  padding: 12px 15px;
+  border: 1px solid #eee2f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(100, 50, 110, 0.05);
+  transition: all 0.2s ease;
+}
+
+.order-card:hover {
+  border-color: #c58acb;
+  background: #fffaff;
+  transform: translateY(-2px);
+}
+
+.order-card img {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.order-card strong {
+  color: #762d85;
+  font-size: 17px;
+}
+
+.order-card span {
+  font-size: 13px;
+}
+
+.order-card b {
+  color: #71317e;
+  white-space: nowrap;
+}
+
+.order-card button {
+  padding: 9px 17px;
+  border: none;
+  border-radius: 10px;
+  background: #f2e2f6;
+  color: #813d8e;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.order-card button:hover {
+  background: #994b94;
+  color: white;
+}
+
+/* حالات الطلبات */
+
+.status {
+  padding: 8px 13px;
+  border-radius: 20px;
+  font-size: 12px !important;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.status.preparing {
+  color: #a56b00;
+  background: #fff0c8;
+}
+
+.status.delivered {
+  color: #27844b;
+  background: #dff5e5;
+}
+
+/* ==============================
+   تتبع الطلب
+============================== */
+
+.tracking-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 40px;
+  padding: 22px 15px;
+  border: 1px solid #eee0f0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fffafd, #f8effa);
+}
+
+.tracking-section h3 {
+  width: 100%;
+  margin: 0 0 10px;
+  color: #653276;
+  font-size: 18px;
+  text-align: center;
+}
+
+.tracking-step {
+  flex: 1;
+  min-width: 85px;
+  text-align: center;
+  color: #4c3454;
+}
+
+.tracking-step span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  margin: auto;
+  border: 2px solid #b66ab8;
+  border-radius: 50%;
+  background: #f7eafa;
+  color: #91449b;
+  font-size: 20px;
+  transition: 0.2s;
+}
+
+.tracking-step p {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ==============================
+   المفضلة
+============================== */
+
+.main-content section > .order-card {
+  margin-bottom: 12px;
+}
+
+.main-content section > p {
+  color: #82658b;
+  font-size: 15px;
+}
+
+/* ==============================
+   العناوين
+============================== */
+
+.main-content section > .order-card span {
+  color: #76567e;
+  text-align: right;
+}
+
+/* ==============================
+   البيانات الشخصية
+============================== */
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 550px;
+  padding: 22px;
+  border: 1px solid #ead8ef;
+  border-radius: 16px;
+  background: #fcf7fd;
+}
+
+.profile-info p {
+  margin: 0;
+  padding: 13px;
+  border-radius: 10px;
+  background: white;
+  color: #76567e;
+  font-size: 15px;
+}
+
+.profile-info strong {
+  color: #71317e;
+}
+
+/* ==============================
+   الشاشات الصغيرة
+============================== */
+
+@media (max-width: 750px) {
+
+  .orders-page {
+    padding: 12px;
+  }
+
+  .orders-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 18px;
+    border-left: none;
+    border-bottom: 1px solid #e7d5ed;
+  }
+
+  .profile {
+    margin-bottom: 15px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 29px;
+  }
+
+  .side-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .side-menu button {
+    width: auto;
+    min-height: 40px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .main-content {
+    padding: 18px 12px;
+  }
+
+  .tabs {
+    gap: 8px;
+  }
+
+  .tabs button {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .order-card {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .tracking-section {
+    gap: 12px;
+  }
+
+  .tracking-step {
+    min-width: 65px;
+  }
+
+  .page-title {
+    max-width: 100%;
+    padding: 12px 18px;
+    font-size: 18px;
+  }
+}
