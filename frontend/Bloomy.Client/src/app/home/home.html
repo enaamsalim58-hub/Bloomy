@@ -8,20 +8,33 @@
     </a>
 
     <nav class="nav-links">
-      <a routerLink="/" class="active">الرئيسية</a>
-      <a href="#categories">الأقسام</a>
-      <a href="#products">المنتجات</a>
-      <a href="#offers">العروض</a>
-      <a routerLink="/about">من نحن</a>
-      <a routerLink="/contact">تواصل معنا</a>
+      <a routerLink="/"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+        الرئيسية
+      </a>
+
+      <a routerLink="/products" routerLinkActive="active">
+        المنتجات
+      </a>
+
+      <a routerLink="/offers" routerLinkActive="active">
+        العروض
+      </a>
+
+      <a routerLink="/contact" routerLinkActive="active">
+        تواصل معنا
+      </a>
     </nav>
 
     <div class="nav-actions">
-      <a routerLink="/contact" class="icon-link" aria-label="تواصل معنا">
-        <span>☎</span>
+      <a routerLink="/products" class="icon-link cart-icon" aria-label="السلة">
+        🛒
+        <span class="cart-count">3</span>
       </a>
-      <a href="#products" class="icon-link" aria-label="المنتجات">
-        <span>♡</span>
+
+      <a routerLink="/contact" class="icon-link user-icon" aria-label="حساب المستخدم">
+        <img src="/Images/user.png" alt="حساب المستخدم">
       </a>
     </div>
   </header>
@@ -29,98 +42,59 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <span class="hero-label">أهلاً بك في Bloomy</span>
-
       <h1>
-        اجعلي لحظاتك
+        اجعل لحظاتك
         <span>أكثر جمالاً</span>
       </h1>
 
       <p>
-        باقات ورود وهدايا مميزة
+        باقات ورد وهدايا مميزة
         <br>
-        صُممت لتعبّر عن أجمل مشاعرك
+        لكل مناسبة
       </p>
 
-      <button class="primary-button" (click)="scrollToProducts()">
-        تسوقي الآن
-        <span>←</span>
-      </button>
+      <a routerLink="/products" class="primary-button">
+        تسوق الآن <span>←</span>
+      </a>
     </div>
 
     <div class="hero-decoration">
-      <img src="/Images/fl.png" alt="باقة ورود جميلة">
-      <div class="decoration-circle"></div>
+     
     </div>
 
     <div class="hero-bottom">
       <span></span>
-      <span class="active-dot"></span>
       <span></span>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features">
-    <div class="feature">
-      <span class="feature-icon">✿</span>
-      <div>
-        <h3>هدايا مميزة</h3>
-        <p>اختيارات تناسب كل مناسبة</p>
-      </div>
-    </div>
-
-    <div class="feature">
-      <span class="feature-icon">♡</span>
-      <div>
-        <h3>جودة واهتمام</h3>
-        <p>نهتم بأدق التفاصيل</p>
-      </div>
-    </div>
-
-    <div class="feature">
-      <span class="feature-icon">✧</span>
-      <div>
-        <h3>تصاميم جميلة</h3>
-        <p>لمسات تضيف الجمال لهديتك</p>
-      </div>
+      <span></span>
     </div>
   </section>
 
   <!-- Categories -->
   <section class="categories-section" id="categories">
-    <div class="section-heading">
-      <span>اكتشفي عالم Bloomy</span>
-      <h2>تسوقي حسب الأقسام</h2>
-      <p>اختاري القسم الذي يناسب ذوقك</p>
-    </div>
-
     <div class="categories-grid">
       @for (category of categories; track category.name) {
-        <a class="category-card" href="#products">
+        <a class="category-card" routerLink="/products">
           <div class="category-image">
             <img [src]="category.image" [alt]="category.name">
           </div>
           <h3>{{ category.name }}</h3>
-          <span class="category-arrow">←</span>
         </a>
       }
     </div>
   </section>
 
-  <!-- Products -->
+  <!-- Products Preview -->
   <section class="products-section" id="products">
     <div class="section-heading">
-      <span>اختياراتنا لك</span>
+      <span>اختيارات Bloomy</span>
       <h2>منتجاتنا المميزة</h2>
-      <p>اكتشفي أجمل الهدايا وباقات الورود</p>
     </div>
 
     <div class="search-box">
       <span>⌕</span>
       <input
         type="search"
-        placeholder="ابحثي عن المنتج الذي تريدينه..."
+        placeholder="ابحثي عن المنتج..."
         aria-label="البحث عن المنتجات"
         (input)="searchTerm = $any($event.target).value">
     </div>
@@ -128,63 +102,12 @@
     <div class="empty-products">
       <span class="empty-icon">✿</span>
       <h3>منتجات Bloomy</h3>
-      <p>سيتم عرض المنتجات هنا عند ربط الصفحة بقاعدة بيانات المتجر.</p>
-    </div>
-  </section>
+      <p>ستظهر المنتجات هنا عند ربطها بقاعدة البيانات.</p>
 
-  <!-- Offers -->
-  <section class="offers-section" id="offers">
-    <div class="offers-content">
-      <span>لأن كل مناسبة تستحق الجمال</span>
-      <h2>اجعلي هديتك ذكرى لا تُنسى</h2>
-      <p>اكتشفي تشكيلتنا المميزة من الورود والهدايا.</p>
-      <button class="light-button" (click)="scrollToProducts()">
-        اكتشفي المنتجات
-      </button>
-    </div>
-    <div class="offers-flower">✿</div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <h2>كوني قريبة من عالم Bloomy</h2>
-    <p>تابعي أحدث منتجاتنا وعروضنا.</p>
-    <a routerLink="/contact">تواصلي معنا</a>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-brand">
-      <a class="logo" routerLink="/">
-        <img src="/Images/logo.jpeg" alt="Bloomy">
-        <span>Bloomy</span>
+      <a routerLink="/products" class="primary-button">
+        عرض جميع المنتجات
       </a>
-      <p>تفاصيل صغيرة تصنع لحظات جميلة.</p>
     </div>
-
-    <div class="footer-links">
-      <h3>روابط سريعة</h3>
-      <a routerLink="/">الرئيسية</a>
-      <a routerLink="/about">من نحن</a>
-      <a routerLink="/contact">تواصل معنا</a>
-    </div>
-
-    <div class="footer-links">
-      <h3>تسوقي</h3>
-      <a href="#categories">الأقسام</a>
-      <a href="#products">المنتجات</a>
-      <a href="#offers">العروض</a>
-    </div>
-
-    <div class="footer-links">
-      <h3>تابعينا</h3>
-      <p>يسعدنا تواصلك معنا ومعرفة آرائك.</p>
-      <a routerLink="/contact">اتصلي بنا</a>
-    </div>
-
-    <div class="copyright">
-      جميع الحقوق محفوظة © Bloomy
-    </div>
-  </footer>
+  </section>
 
 </div>
