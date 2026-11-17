@@ -23,6 +23,7 @@ import { Cart } from './cart/cart';
 import {Products} from './products/products';
 import { Products } from './products/products';
 import { ManageProducts } from './manage-products/manage-products';
+import { Login } from './login/login';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -32,5 +33,7 @@ export const routes: Routes = [
   { path: 'manage-products', component: ManageProducts },
   { path: 'about', component: About },
   { path: 'contact', component: Contact },
+  { path: 'login', component: Login },
   { path: '**', redirectTo: '' },
+  
 ];
