@@ -1,0 +1,209 @@
+<div class="orders-page" dir="rtl">
+
+  <div class="page-title">
+    <span>5</span>
+    حساب العميل وتتبع الطلبات
+  </div>
+
+  <div class="orders-container">
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar">
+
+      <div class="profile">
+        <div class="avatar">👩🏻</div>
+        <h3>{{ user.fullName }}</h3>
+      </div>
+
+      <nav class="side-menu">
+
+        <button
+          [class.active]="activeTab === 'orders'"
+          (click)="activeTab = 'orders'">
+          ▣ طلباتي
+        </button>
+
+        <button
+          [class.active]="activeTab === 'wishlist'"
+          (click)="activeTab = 'wishlist'">
+          ♡ المفضلة
+        </button>
+
+        <button
+          [class.active]="activeTab === 'addresses'"
+          (click)="activeTab = 'addresses'">
+          ⌖ العناوين
+        </button>
+
+        <button
+          [class.active]="activeTab === 'info'"
+          (click)="activeTab = 'info'">
+          ♙ البيانات الشخصية
+        </button>
+
+        <button (click)="logout()">
+          ⇥ تسجيل الخروج
+        </button>
+
+      </nav>
+
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+
+      <!-- صفحة طلباتي -->
+      <section *ngIf="activeTab === 'orders'">
+
+        <h2>طلباتي</h2>
+
+        <div class="tabs">
+
+          <button
+            [class.selected]="orderFilter === 'all'"
+            (click)="orderFilter = 'all'">
+            جميع الطلبات
+          </button>
+
+          <button
+            [class.selected]="orderFilter === 'processing'"
+            (click)="orderFilter = 'processing'">
+            قيد التجهيز
+          </button>
+
+          <button
+            [class.selected]="orderFilter === 'delivered'"
+            (click)="orderFilter = 'delivered'">
+            تم التسليم
+          </button>
+
+        </div>
+
+        <div class="orders-list">
+
+          <div
+            class="order-card"
+            *ngFor="let order of filteredOrders"
+            (click)="selectOrder(order)">
+
+            <img [src]="order.productImage" alt="صورة المنتج">
+
+            <strong>#{{ order.orderId }}</strong>
+
+            <span>{{ order.orderDate }}</span>
+
+            <b>{{ order.total }} ر.س</b>
+
+            <span
+              class="status"
+              [class.delivered]="order.status === 'تم التسليم'"
+              [class.preparing]="order.status !== 'تم التسليم'">
+              {{ order.status }}
+            </span>
+
+          </div>
+
+          <p *ngIf="filteredOrders.length === 0">
+            لا توجد طلبات في هذه الحالة.
+          </p>
+
+        </div>
+
+        <!-- تتبع الطلب المحدد -->
+        <section class="tracking-section" *ngIf="selectedOrder">
+
+          <h3>تتبع الطلب #{{ selectedOrder.orderId }}</h3>
+
+          <div class="tracking-step">
+            <span>✉</span>
+            <p>تم الطلب</p>
+          </div>
+
+          <div class="tracking-step">
+            <span>⚙</span>
+            <p>قيد التجهيز</p>
+          </div>
+
+          <div class="tracking-step">
+            <span>🚚</span>
+            <p>في الطريق</p>
+          </div>
+
+          <div class="tracking-step">
+            <span>✓</span>
+            <p>تم التسليم</p>
+          </div>
+
+        </section>
+
+      </section>
+
+      <!-- صفحة المفضلة -->
+      <section *ngIf="activeTab === 'wishlist'">
+
+        <h2>المفضلة</h2>
+
+        <div class="order-card" *ngFor="let item of wishlist">
+
+          <strong>{{ item.productName }}</strong>
+
+          <b>{{ item.price }} ر.س</b>
+
+          <button (click)="removeFromWishlist(item.productId)">
+            حذف
+          </button>
+
+        </div>
+
+        <p *ngIf="wishlist.length === 0">
+          لا توجد منتجات في المفضلة.
+        </p>
+
+      </section>
+
+      <!-- صفحة العناوين -->
+      <section *ngIf="activeTab === 'addresses'">
+
+        <h2>عناويني</h2>
+
+        <div class="order-card" *ngFor="let address of addresses">
+
+          <strong>{{ address.title }}</strong>
+
+          <span>{{ address.addressLine }}</span>
+
+        </div>
+
+      </section>
+
+      <!-- صفحة البيانات الشخصية -->
+      <section *ngIf="activeTab === 'info'">
+
+        <h2>البيانات الشخصية</h2>
+
+        <div class="profile-info">
+
+          <p>
+            الاسم:
+            <strong>{{ user.fullName }}</strong>
+          </p>
+
+          <p>
+            البريد الإلكتروني:
+            <strong>{{ user.email }}</strong>
+          </p>
+
+          <p>
+            رقم الهاتف:
+            <strong>{{ user.phone }}</strong>
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</div>
