@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Bloomy.Api.DTOs
 {
@@ -16,5 +15,8 @@ namespace Bloomy.Api.DTOs
         [Required]
         [MaxLength(250)]
         public string DeliveryAddress { get; set; } = string.Empty;
+
+        public decimal DeliveryFee { get; set; } = 20m;
+        public decimal Discount { get; set; } = 0m;
     }
 }

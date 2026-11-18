@@ -118,25 +118,25 @@ namespace Bloomy.Api.Migrations
                         new
                         {
                             CategoryId = 1,
-                            ImageUrl = "/images/cat-roses.jpg",
+                            ImageUrl = "/Images/f.jpeg",
                             Name = "باقات الورود"
                         },
                         new
                         {
                             CategoryId = 2,
-                            ImageUrl = "/images/cat-choco.jpg",
+                            ImageUrl = "/Images/k.jpeg",
                             Name = "شوكولاتة"
                         },
                         new
                         {
                             CategoryId = 3,
-                            ImageUrl = "/images/cat-dolls.jpg",
+                            ImageUrl = "/Images/d.jpeg",
                             Name = "دمى"
                         },
                         new
                         {
                             CategoryId = 4,
-                            ImageUrl = "/images/cat-gifts.jpg",
+                            ImageUrl = "/Images/h.jpeg",
                             Name = "هدايا"
                         });
                 });
@@ -216,7 +216,7 @@ namespace Bloomy.Api.Migrations
                             DeliveryAddress = "المكلا",
                             DeliveryFee = 10m,
                             Discount = 0m,
-                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5342),
+                            OrderDate = new DateTime(2026, 11, 18, 12, 58, 57, 484, DateTimeKind.Local).AddTicks(2952),
                             ReceiverName = "سارة",
                             ReceiverPhone = "770000000",
                             Status = 0,
@@ -230,7 +230,7 @@ namespace Bloomy.Api.Migrations
                             DeliveryAddress = "المكلا",
                             DeliveryFee = 10m,
                             Discount = 0m,
-                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5351),
+                            OrderDate = new DateTime(2026, 11, 18, 12, 58, 57, 484, DateTimeKind.Local).AddTicks(2968),
                             ReceiverName = "سارة",
                             ReceiverPhone = "770000000",
                             Status = 1,
@@ -244,7 +244,7 @@ namespace Bloomy.Api.Migrations
                             DeliveryAddress = "المكلا",
                             DeliveryFee = 10m,
                             Discount = 0m,
-                            OrderDate = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5355),
+                            OrderDate = new DateTime(2026, 11, 18, 12, 58, 57, 484, DateTimeKind.Local).AddTicks(2977),
                             ReceiverName = "سارة",
                             ReceiverPhone = "770000000",
                             Status = 3,
@@ -386,8 +386,9 @@ namespace Bloomy.Api.Migrations
                         {
                             ProductId = 1,
                             CategoryId = 1,
+                            Description = "باقة فاخرة من الورود البنفسجية والبيضاء مع تنسيق أنيق وتغليف مميز.",
                             IsAvailable = true,
-                            MainImageUrl = "/images/lavender.jpg",
+                            MainImageUrl = "/Images/f.jpeg",
                             Name = "باقة لافندر الملكية",
                             Price = 199m,
                             StockQuantity = 20
@@ -396,8 +397,9 @@ namespace Bloomy.Api.Migrations
                         {
                             ProductId = 2,
                             CategoryId = 1,
+                            Description = "تنسيق أنيق من الجوري الأحمر الطبيعي.",
                             IsAvailable = true,
-                            MainImageUrl = "/images/red-roses.jpg",
+                            MainImageUrl = "/Images/j.jpeg",
                             Name = "باقة ورد أحمر",
                             Price = 149m,
                             StockQuantity = 15
@@ -406,8 +408,9 @@ namespace Bloomy.Api.Migrations
                         {
                             ProductId = 3,
                             CategoryId = 3,
+                            Description = "دمية ناعمة مثالية للإهداء مع الباقات.",
                             IsAvailable = true,
-                            MainImageUrl = "/images/love-doll.jpg",
+                            MainImageUrl = "/Images/d.jpeg",
                             Name = "دمية الحب",
                             Price = 90m,
                             StockQuantity = 30
@@ -416,8 +419,9 @@ namespace Bloomy.Api.Migrations
                         {
                             ProductId = 4,
                             CategoryId = 2,
+                            Description = "تشكيلة شوكولاتة بلجيكية مغلفة بعناية.",
                             IsAvailable = true,
-                            MainImageUrl = "/images/choco-box.jpg",
+                            MainImageUrl = "/Images/k.jpeg",
                             Name = "علبة شوكولاتة فاخرة",
                             Price = 90m,
                             StockQuantity = 25
@@ -450,6 +454,29 @@ namespace Bloomy.Api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductColors");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductColorId = 1,
+                            ColorName = "lavender",
+                            HexCode = "#994b94",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            ProductColorId = 2,
+                            ColorName = "pink",
+                            HexCode = "#f472b6",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            ProductColorId = 3,
+                            ColorName = "cream",
+                            HexCode = "#fef3c7",
+                            ProductId = 1
+                        });
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.ProductImage", b =>
@@ -498,6 +525,36 @@ namespace Bloomy.Api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductSizes");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductSizeId = 1,
+                            ExtraPrice = 0m,
+                            Name = "صغير",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            ProductSizeId = 2,
+                            ExtraPrice = 30m,
+                            Name = "متوسط",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            ProductSizeId = 3,
+                            ExtraPrice = 60m,
+                            Name = "كبير",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            ProductSizeId = 4,
+                            ExtraPrice = 0m,
+                            Name = "متوسط",
+                            ProductId = 2
+                        });
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.Review", b =>
@@ -590,7 +647,7 @@ namespace Bloomy.Api.Migrations
                         new
                         {
                             UserId = 1,
-                            CreatedAt = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5192),
+                            CreatedAt = new DateTime(2026, 11, 18, 12, 58, 57, 484, DateTimeKind.Local).AddTicks(2728),
                             Email = "admin@bloomy.com",
                             FullName = "Admin User",
                             PasswordHash = "123456",
@@ -599,7 +656,7 @@ namespace Bloomy.Api.Migrations
                         new
                         {
                             UserId = 2,
-                            CreatedAt = new DateTime(2026, 11, 14, 13, 10, 19, 771, DateTimeKind.Local).AddTicks(5196),
+                            CreatedAt = new DateTime(2026, 11, 18, 12, 58, 57, 484, DateTimeKind.Local).AddTicks(2734),
                             Email = "sara@bloomy.com",
                             FullName = "سارة",
                             PasswordHash = "123456",
@@ -641,13 +698,11 @@ namespace Bloomy.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bloomy.Api.Models.User", "User")
+                    b.HasOne("Bloomy.Api.Models.User", null)
                         .WithMany("CartItems")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bloomy.Api.Models.Favorite", b =>

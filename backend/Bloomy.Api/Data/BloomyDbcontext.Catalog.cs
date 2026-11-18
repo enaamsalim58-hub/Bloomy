@@ -30,14 +30,14 @@ namespace Bloomy.Api.Data
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(150);
                 entity.Property(p => p.Price).HasColumnType("decimal(18,2)");
 
-                // العلاقة 1:N مع Category (سلوك الحذف Restrict بناءً على الخطة)[span_1](start_span)[span_1](end_span)
+                // العلاقة 1:N مع Category (سلوك الحذف Restrict بناءً على الخطة)
                 entity.HasOne(p => p.Category)
                       .WithMany(c => c.Products)
                       .HasForeignKey(p => p.CategoryId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // إعدادات جدول ProductImages (سلوك الحذف Cascade)[span_2](start_span)[span_2](end_span)
+            // إعدادات جدول ProductImages (سلوك الحذف Cascade)
             modelBuilder.Entity<ProductImage>(entity =>
             {
                 entity.HasKey(i => i.ProductImageId);
@@ -48,7 +48,7 @@ namespace Bloomy.Api.Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // إعدادات جدول ProductSizes (سلوك الحذف Cascade)[span_3](start_span)[span_3](end_span)
+            // إعدادات جدول ProductSizes (سلوك الحذف Cascade)
             modelBuilder.Entity<ProductSize>(entity =>
             {
                 entity.HasKey(s => s.ProductSizeId);
@@ -60,7 +60,7 @@ namespace Bloomy.Api.Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // إعدادات جدول ProductColors (سلوك الحذف Cascade)[span_4](start_span)[span_4](end_span)
+            // إعدادات جدول ProductColors (سلوك الحذف Cascade)
             modelBuilder.Entity<ProductColor>(entity =>
             {
                 entity.HasKey(c => c.ProductColorId);
@@ -72,7 +72,7 @@ namespace Bloomy.Api.Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // إعدادات جدول PriceOffers (علاقة 1:1 مع Product، وسلوك الحذف Cascade)[span_5](start_span)[span_5](end_span)
+            // إعدادات جدول PriceOffers (علاقة 1:1 مع Product، وسلوك الحذف Cascade)
             modelBuilder.Entity<PriceOffer>(entity =>
             {
                 entity.HasKey(o => o.PriceOfferId);
@@ -83,7 +83,7 @@ namespace Bloomy.Api.Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // إعدادات جدول Tags وعلاقة N:M مع Product[span_6](start_span)[span_6](end_span)
+            // إعدادات جدول Tags وعلاقة N:M مع Product
             modelBuilder.Entity<Tag>(entity =>
             {
                 entity.HasKey(t => t.TagId);
@@ -92,19 +92,72 @@ namespace Bloomy.Api.Data
                       .WithMany(p => p.Tags);
             });
 
-            // البيانات الأولية (Seed Data) بالمعرفات الثابتة المتفق عليها في الخطة[span_7](start_span)[span_7](end_span)
+            // البيانات الأولية (Seed Data) بالمعرفات الثابتة ومسارات الصور المعتمدة
             modelBuilder.Entity<Category>().HasData(
-                new Category { CategoryId = 1, Name = "باقات الورود", ImageUrl = "/images/cat-roses.jpg" },
-                new Category { CategoryId = 2, Name = "شوكولاتة", ImageUrl = "/images/cat-choco.jpg" },
-                new Category { CategoryId = 3, Name = "دمى", ImageUrl = "/images/cat-dolls.jpg" },
-                new Category { CategoryId = 4, Name = "هدايا", ImageUrl = "/images/cat-gifts.jpg" }
+                new Category { CategoryId = 1, Name = "باقات الورود", ImageUrl = "/Images/f.jpeg" },
+                new Category { CategoryId = 2, Name = "شوكولاتة", ImageUrl = "/Images/k.jpeg" },
+                new Category { CategoryId = 3, Name = "دمى", ImageUrl = "/Images/d.jpeg" },
+                new Category { CategoryId = 4, Name = "هدايا", ImageUrl = "/Images/h.jpeg" }
             );
 
             modelBuilder.Entity<Product>().HasData(
-                new Product { ProductId = 1, CategoryId = 1, Name = "باقة لافندر الملكية", Price = 199m, StockQuantity = 20, IsAvailable = true, MainImageUrl = "/images/lavender.jpg" },
-                new Product { ProductId = 2, CategoryId = 1, Name = "باقة ورد أحمر", Price = 149m, StockQuantity = 15, IsAvailable = true, MainImageUrl = "/images/red-roses.jpg" },
-                new Product { ProductId = 3, CategoryId = 3, Name = "دمية الحب", Price = 90m, StockQuantity = 30, IsAvailable = true, MainImageUrl = "/images/love-doll.jpg" },
-                new Product { ProductId = 4, CategoryId = 2, Name = "علبة شوكولاتة فاخرة", Price = 90m, StockQuantity = 25, IsAvailable = true, MainImageUrl = "/images/choco-box.jpg" }
+                new Product
+                {
+                    ProductId = 1,
+                    CategoryId = 1,
+                    Name = "باقة لافندر الملكية",
+                    Description = "باقة فاخرة من الورود البنفسجية والبيضاء مع تنسيق أنيق وتغليف مميز.",
+                    Price = 199m,
+                    StockQuantity = 20,
+                    IsAvailable = true,
+                    MainImageUrl = "/Images/f.jpeg"
+                },
+                new Product
+                {
+                    ProductId = 2,
+                    CategoryId = 1,
+                    Name = "باقة ورد أحمر",
+                    Description = "تنسيق أنيق من الجوري الأحمر الطبيعي.",
+                    Price = 149m,
+                    StockQuantity = 15,
+                    IsAvailable = true,
+                    MainImageUrl = "/Images/j.jpeg"
+                },
+                new Product
+                {
+                    ProductId = 3,
+                    CategoryId = 3,
+                    Name = "دمية الحب",
+                    Description = "دمية ناعمة مثالية للإهداء مع الباقات.",
+                    Price = 90m,
+                    StockQuantity = 30,
+                    IsAvailable = true,
+                    MainImageUrl = "/Images/d.jpeg"
+                },
+                new Product
+                {
+                    ProductId = 4,
+                    CategoryId = 2,
+                    Name = "علبة شوكولاتة فاخرة",
+                    Description = "تشكيلة شوكولاتة بلجيكية مغلفة بعناية.",
+                    Price = 90m,
+                    StockQuantity = 25,
+                    IsAvailable = true,
+                    MainImageUrl = "/Images/k.jpeg"
+                }
+            );
+
+            modelBuilder.Entity<ProductSize>().HasData(
+                new ProductSize { ProductSizeId = 1, ProductId = 1, Name = "صغير", ExtraPrice = 0m },
+                new ProductSize { ProductSizeId = 2, ProductId = 1, Name = "متوسط", ExtraPrice = 30m },
+                new ProductSize { ProductSizeId = 3, ProductId = 1, Name = "كبير", ExtraPrice = 60m },
+                new ProductSize { ProductSizeId = 4, ProductId = 2, Name = "متوسط", ExtraPrice = 0m }
+            );
+
+            modelBuilder.Entity<ProductColor>().HasData(
+                new ProductColor { ProductColorId = 1, ProductId = 1, ColorName = "lavender", HexCode = "#994b94" },
+                new ProductColor { ProductColorId = 2, ProductId = 1, ColorName = "pink", HexCode = "#f472b6" },
+                new ProductColor { ProductColorId = 3, ProductId = 1, ColorName = "cream", HexCode = "#fef3c7" }
             );
         }
     }

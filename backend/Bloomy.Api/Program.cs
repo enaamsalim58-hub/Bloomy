@@ -1,28 +1,28 @@
-using Bloomy.Api.Services;
 using Bloomy.Api.Data;
-using Microsoft.EntityFrameworkCore;
+using Bloomy.Api.Services;
+using Bloomy.Api.Services.Interfaces;
 using Bloomy.Api.Services.Products;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
-// 1. إضافة خدمات الـ Swagger لدعم توثيق واجهات الـ API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database Connection
 builder.Services.AddDbContext<BloomyDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
 
-// ===== Users services (Student 5) =====
 builder.Services.AddScoped<IUserService, UserService>();
-// ===== Products & Categories services (Student 2) =====
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-// CORS Policy
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AngularPolicy", policy =>
@@ -35,7 +35,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// 2. تفعيل الـ Swagger في بيئة التطوير
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -45,5 +44,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AngularPolicy");
 app.MapControllers();
-
 app.Run();
