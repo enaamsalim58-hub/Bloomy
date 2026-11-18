@@ -12,16 +12,16 @@
 
       <!-- قائمة الروابط بخلفية بنفسجي فاتح -->
       <nav class="sidebar-menu">
-        <a class="side-item" routerLink="/">
-          <span class="side-icon">⌂</span>
-          <span>لوحة التحكم</span>
-        </a>
+     <a class="side-item" routerLink="/dashboard">
+  <span class="side-icon">⌂</span>
+  <span>لوحة التحكم</span>
+</a>
         <button class="side-item active">
           <span class="side-icon">📦</span>
           <span>المنتجات</span>
         </button>
-        <a class="side-item" routerLink="/">
-          <span class="side-icon">🧾</span>
+       <a class="side-item" routerLink="/dashboard" [queryParams]="{ view: 'orders' }">
+           <span class="side-icon">🧾</span>
           <span>الطلبات</span>
         </a>
         <a class="side-item" routerLink="/">

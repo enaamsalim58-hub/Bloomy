@@ -9,7 +9,11 @@
     </div>
 
     <nav class="admin-nav">
-      <a class="nav-item active" routerLink="/dashboard">
+
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'dashboard'"
+        (click)="showDashboard()">
         🏠 لوحة التحكم
       </a>
 
@@ -17,21 +21,34 @@
         💐 المنتجات
       </a>
 
-      <a class="nav-item">
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'orders'"
+        (click)="showOrders()">
         📦 الطلبات
       </a>
 
-      <a class="nav-item">
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'customers'"
+        (click)="showCustomers()">
         👥 العملاء
       </a>
 
-      <a class="nav-item">
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'reports'"
+        (click)="showReports()">
         📊 التقارير
       </a>
 
-      <a class="nav-item">
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'settings'"
+        (click)="showSettings()">
         ⚙️ الإعدادات
       </a>
+
     </nav>
 
   </aside>
@@ -39,158 +56,548 @@
   <!-- المحتوى الرئيسي -->
   <div class="admin-main">
 
-    <header class="topbar">
-      <h1>مرحباً، مدير النظام</h1>
-      <button class="notif-btn">🔔</button>
-    </header>
+    <!-- لوحة التحكم الرئيسية -->
+    <ng-container *ngIf="activeView === 'dashboard'">
 
-    <!-- بطاقات الإحصائيات -->
-    <section class="stats-grid">
+      <header class="topbar">
+        <h1>مرحباً، مدير النظام</h1>
+        <button class="notif-btn">🔔</button>
+      </header>
 
-      <div class="stat-card">
-        <div class="stat-icon">💰</div>
-        <div>
-          <span class="stat-label">إجمالي المبيعات</span>
-          <h3>{{ stats.totalSales | number }} ر.س</h3>
-        </div>
-      </div>
+      <!-- الإحصائيات -->
+      <section class="stats-grid">
 
-      <div class="stat-card">
-        <div class="stat-icon">🛒</div>
-        <div>
-          <span class="stat-label">عدد الطلبات</span>
-          <h3>{{ stats.totalOrders }}</h3>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">👥</div>
-        <div>
-          <span class="stat-label">عدد العملاء</span>
-          <h3>{{ stats.totalCustomers }}</h3>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">🎁</div>
-        <div>
-          <span class="stat-label">عدد المنتجات</span>
-          <h3>{{ stats.totalProducts }}</h3>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- الرسوم البيانية -->
-    <section class="charts-grid">
-
-      <!-- حالة الطلبات -->
-      <div class="panel-card">
-
-        <h3>حالة الطلبات</h3>
-
-        <div class="donut-layout">
-
-          <div class="donut-ring">
-            <div class="donut-inner">
-              <strong>{{ stats.totalOrders }}</strong>
-              <span>طلب</span>
-            </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div>
+            <span class="stat-label">إجمالي المبيعات</span>
+            <h3>{{ stats.totalSales | number }} ر.س</h3>
           </div>
-
-          <ul class="legend-list">
-            <li *ngFor="let item of orderStatusSummary">
-              <span
-                class="dot"
-                [style.background]="item.color">
-              </span>
-
-              <span>{{ item.count }} {{ item.label }}</span>
-            </li>
-          </ul>
-
         </div>
-      </div>
 
-      <!-- المبيعات الشهرية -->
-      <div class="panel-card">
+        <div class="stat-card">
+          <div class="stat-icon">🛒</div>
+          <div>
+            <span class="stat-label">عدد الطلبات</span>
+            <h3>{{ stats.totalOrders }}</h3>
+          </div>
+        </div>
 
-        <h3>المبيعات الشهرية</h3>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div>
+            <span class="stat-label">عدد العملاء</span>
+            <h3>{{ stats.totalCustomers }}</h3>
+          </div>
+        </div>
 
-        <div class="bar-chart">
+        <div class="stat-card">
+          <div class="stat-icon">🎁</div>
+          <div>
+            <span class="stat-label">عدد المنتجات</span>
+            <h3>{{ stats.totalProducts }}</h3>
+          </div>
+        </div>
 
-          <div class="bar-col" *ngFor="let m of monthlySales">
+      </section>
 
-            <span class="bar-val">
-              {{ m.amount | number }}
-            </span>
+      <!-- الرسوم البيانية -->
+      <section class="charts-grid">
+
+        <div class="panel-card">
+
+          <h3>حالة الطلبات</h3>
+
+          <div class="donut-layout">
 
             <div
-              class="bar-fill"
-              [style.height.%]="m.percent">
+              class="donut-ring"
+              [style.background]="donutGradient">
+
+              <div class="donut-inner">
+                <strong>{{ stats.totalOrders }}</strong>
+                <span>طلب</span>
+              </div>
+
             </div>
 
-            <span class="bar-label">
-              {{ m.month }}
-            </span>
+            <ul class="legend-list">
+
+              <li *ngFor="let item of orderStatusSummary">
+
+                <span
+                  class="dot"
+                  [style.background]="item.color">
+                </span>
+
+                <span>
+                  {{ item.count }} {{ item.label }}
+                </span>
+
+              </li>
+
+            </ul>
 
           </div>
 
         </div>
+
+        <div class="panel-card">
+
+          <h3>المبيعات الشهرية</h3>
+
+          <div class="bar-chart">
+
+            <div class="bar-col" *ngFor="let m of monthlySales">
+
+              <span class="bar-val">
+                {{ m.amount | number }}
+              </span>
+
+              <div
+                class="bar-fill"
+                [style.height.%]="m.percent">
+              </div>
+
+              <span class="bar-label">
+                {{ m.month }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </ng-container>
+
+
+    <!-- إدارة الطلبات -->
+    <ng-container *ngIf="activeView === 'orders'">
+
+      <header class="topbar">
+        <h1>إدارة الطلبات</h1>
+
+        <button
+          class="notif-btn"
+          type="button"
+          (click)="showDashboard()">
+          🏠
+        </button>
+      </header>
+
+      <section class="panel-card orders-management">
+
+        <h3>طلبات العملاء</h3>
+
+        <p class="orders-description">
+          عرض الطلبات ومتابعة حالتها وتحديثها.
+        </p>
+
+        <div class="table-responsive">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>رقم الطلب</th>
+                <th>اسم العميل</th>
+                <th>التاريخ</th>
+                <th>الحالة</th>
+                <th>الإجمالي</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let order of managerOrders">
+
+                <td>
+                  <strong>#{{ order.orderId }}</strong>
+                </td>
+
+                <td>{{ order.receiverName }}</td>
+
+                <td>{{ order.orderDate }}</td>
+
+                <td>
+
+                  <select
+                    class="status-select"
+                    [value]="order.status"
+                    [style.color]="getStatusColor(order.status)"
+                    (change)="changeOrderStatus(
+                      order.orderId,
+                      $any($event.target).value
+                    )">
+
+                    <option value="جديد">جديد</option>
+                    <option value="قيد التجهيز">قيد التجهيز</option>
+                    <option value="قيد التوصيل">قيد التوصيل</option>
+                    <option value="تم التسليم">تم التسليم</option>
+                    <option value="ملغي">ملغي</option>
+
+                  </select>
+
+                </td>
+
+                <td class="price-cell">
+                  {{ order.total }} ر.س
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <p class="orders-note">
+          يمكنك تغيير حالة الطلب من القائمة، وستتحدث إحصائيات حالات الطلبات في لوحة التحكم.
+        </p>
+
+      </section>
+
+    </ng-container>
+
+
+    <!-- إدارة العملاء -->
+    <ng-container *ngIf="activeView === 'customers'">
+
+      <header class="topbar">
+        <h1>إدارة العملاء</h1>
+
+        <button
+          class="notif-btn"
+          type="button"
+          (click)="showDashboard()">
+          🏠
+        </button>
+      </header>
+
+      <section class="panel-card">
+
+        <h3>قائمة العملاء</h3>
+
+        <p class="orders-description">
+          عرض بيانات العملاء وعدد طلباتهم وإجمالي مشترياتهم.
+        </p>
+
+        <div class="table-responsive">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>رقم العميل</th>
+                <th>اسم العميل</th>
+                <th>البريد الإلكتروني</th>
+                <th>رقم الهاتف</th>
+                <th>عدد الطلبات</th>
+                <th>إجمالي المشتريات</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let customer of managerCustomers">
+
+                <td>
+                  <strong>#{{ customer.customerId }}</strong>
+                </td>
+
+                <td>{{ customer.name }}</td>
+
+                <td>{{ customer.email }}</td>
+
+                <td>{{ customer.phone }}</td>
+
+                <td>{{ customer.totalOrders }}</td>
+
+                <td class="price-cell">
+                  {{ customer.totalSpent | number }} ر.س
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </ng-container>
+
+
+    <!-- التقارير -->
+    <ng-container *ngIf="activeView === 'reports'">
+
+      <header class="topbar">
+        <h1>التقارير والإحصائيات</h1>
+
+        <button
+          class="notif-btn"
+          type="button"
+          (click)="showDashboard()">
+          🏠
+        </button>
+      </header>
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div>
+            <span class="stat-label">مبيعات الطلبات المعروضة</span>
+            <h3>{{ totalReportedSales | number }} ر.س</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div>
+            <span class="stat-label">إجمالي الطلبات</span>
+            <h3>{{ stats.totalOrders }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div>
+            <span class="stat-label">الطلبات المسلّمة</span>
+            <h3>{{ deliveredOrdersCount }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div>
+            <span class="stat-label">الطلبات الجديدة وقيد التجهيز</span>
+            <h3>{{ pendingOrdersCount }}</h3>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="panel-card">
+
+        <h3>تقرير حالات الطلبات</h3>
+
+        <div class="table-responsive">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>حالة الطلب</th>
+                <th>عدد الطلبات</th>
+                <th>النسبة</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let item of orderStatusSummary">
+
+                <td>
+                  <span
+                    class="dot"
+                    [style.background]="item.color">
+                  </span>
+                  {{ item.label }}
+                </td>
+
+                <td>{{ item.count }}</td>
+
+                <td>
+                  {{ getStatusPercentage(item.count) | number:'1.0-1' }}%
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+      <section class="panel-card">
+
+        <h3>تقرير المبيعات الشهرية</h3>
+
+        <div class="table-responsive">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>الشهر</th>
+                <th>إجمالي المبيعات</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let month of monthlySales">
+
+                <td>{{ month.month }}</td>
+
+                <td class="price-cell">
+                  {{ month.amount | number }} ر.س
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </ng-container>
+
+
+    <!-- الإعدادات -->
+    <ng-container *ngIf="activeView === 'settings'">
+
+      <header class="topbar">
+        <h1>إعدادات النظام</h1>
+
+        <button
+          class="notif-btn"
+          type="button"
+          (click)="showDashboard()">
+          🏠
+        </button>
+      </header>
+
+      <div class="settings-grid">
+
+        <!-- بيانات المدير والمتجر -->
+        <section class="panel-card settings-card">
+
+          <h3>البيانات العامة</h3>
+
+          <div class="settings-form">
+
+            <div class="field">
+              <label>اسم مدير النظام</label>
+              <input
+                type="text"
+                [(ngModel)]="settingsForm.adminName">
+            </div>
+
+            <div class="field">
+              <label>اسم المتجر</label>
+              <input
+                type="text"
+                [(ngModel)]="settingsForm.storeName">
+            </div>
+
+            <div class="field">
+              <label>البريد الإلكتروني</label>
+              <input
+                type="email"
+                [(ngModel)]="settingsForm.storeEmail">
+            </div>
+
+            <div class="field">
+              <label>رقم الهاتف</label>
+              <input
+                type="tel"
+                [(ngModel)]="settingsForm.storePhone">
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- الإشعارات -->
+        <section class="panel-card settings-card">
+
+          <h3>إعدادات الإشعارات</h3>
+
+          <div class="notification-setting">
+
+            <div>
+              <strong>إشعارات الطلبات</strong>
+              <p>استقبال إشعار عند وصول طلب جديد.</p>
+            </div>
+
+            <input
+              type="checkbox"
+              [(ngModel)]="settingsForm.orderNotifications">
+
+          </div>
+
+          <div class="notification-setting">
+
+            <div>
+              <strong>الإشعارات عبر البريد</strong>
+              <p>استقبال التنبيهات عبر البريد الإلكتروني.</p>
+            </div>
+
+            <input
+              type="checkbox"
+              [(ngModel)]="settingsForm.emailNotifications">
+
+          </div>
+
+          <div class="notification-setting">
+
+            <div>
+              <strong>الإشعارات الترويجية</strong>
+              <p>استقبال تحديثات العروض والحملات.</p>
+            </div>
+
+            <input
+              type="checkbox"
+              [(ngModel)]="settingsForm.promotionalNotifications">
+
+          </div>
+
+        </section>
+
       </div>
 
-    </section>
+      <section class="panel-card settings-save">
 
-    <!-- جدول أحدث الطلبات -->
-    <section class="panel-card table-section">
+        <button
+          class="save-settings-btn"
+          type="button"
+          (click)="saveSettings()">
+          💾 حفظ الإعدادات
+        </button>
 
-      <h3>أحدث الطلبات</h3>
+        <p
+          class="settings-message"
+          *ngIf="settingsMessage">
+          {{ settingsMessage }}
+        </p>
 
-      <div class="table-responsive">
+      </section>
 
-        <table>
+      <section class="panel-card security-card">
 
-          <thead>
-            <tr>
-              <th>رقم الطلب</th>
-              <th>اسم العميل</th>
-              <th>التاريخ</th>
-              <th>الحالة</th>
-              <th>الإجمالي</th>
-            </tr>
-          </thead>
+        <h3>الأمان والخصوصية</h3>
 
-          <tbody>
+        <p>
+          سيتم ربط إعدادات الأمان وتغيير كلمة المرور بنظام تسجيل الدخول
+          عند اكتمال ربط الواجهة الخلفية.
+        </p>
 
-            <tr *ngFor="let order of recentOrders">
+      </section>
 
-              <td>
-                <strong>#{{ order.orderId }}</strong>
-              </td>
-
-              <td>{{ order.receiverName }}</td>
-
-              <td>{{ order.orderDate }}</td>
-
-              <td>
-                <span class="badge">
-                  {{ order.status }}
-                </span>
-              </td>
-
-              <td class="price-cell">
-                {{ order.total }} ر.س
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
+    </ng-container>
 
   </div>
 
