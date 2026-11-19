@@ -1,0 +1,106 @@
+<div class="profile-page" dir="rtl">
+<header class="profile-header">
+
+  <a routerLink="/home" class="logo">
+    <img src="/Images/logo.jpeg" alt="Bloomy">
+    <span>Bloomy</span>
+  </a>
+
+</header>
+
+  <main class="profile-container">
+
+    <div class="profile-title">
+
+      <div class="profile-avatar">
+        <img src="/Images/user.png" alt="المدير">
+      </div>
+
+      <h1>الملف الشخصي</h1>
+      <p>إدارة بيانات حساب مدير Bloomy</p>
+
+    </div>
+
+    <!-- المعلومات الشخصية -->
+    <section class="profile-card">
+
+      <h2>المعلومات الشخصية</h2>
+
+      <div class="input-group">
+        <label>الاسم الكامل</label>
+
+        <input
+          type="text"
+          [(ngModel)]="adminData.fullName"
+          placeholder="اسم المدير">
+      </div>
+
+      <div class="input-group">
+        <label>البريد الإلكتروني</label>
+
+        <input
+          type="email"
+          [(ngModel)]="adminData.email"
+          placeholder="admin@gmail.com">
+      </div>
+
+      <button
+        class="save-button"
+        type="button"
+        (click)="saveProfile()">
+        حفظ التغييرات
+      </button>
+
+    </section>
+
+    <!-- تغيير كلمة المرور -->
+    <section class="profile-card">
+
+      <h2>تغيير كلمة المرور</h2>
+
+      <div class="input-group">
+        <label>كلمة المرور الحالية</label>
+
+        <input
+          type="password"
+          [(ngModel)]="passwordData.currentPassword"
+          placeholder="أدخل كلمة المرور الحالية">
+      </div>
+
+      <div class="input-group">
+        <label>كلمة المرور الجديدة</label>
+
+        <input
+          type="password"
+          [(ngModel)]="passwordData.newPassword"
+          placeholder="أدخل كلمة المرور الجديدة">
+      </div>
+
+      <div class="input-group">
+        <label>تأكيد كلمة المرور الجديدة</label>
+
+        <input
+          type="password"
+          [(ngModel)]="passwordData.confirmPassword"
+          placeholder="أعد كتابة كلمة المرور الجديدة">
+      </div>
+
+      <button
+        class="save-button"
+        type="button"
+        (click)="changePassword()">
+        تغيير كلمة المرور
+      </button>
+
+    </section>
+
+    <button
+      class="logout-button"
+      type="button"
+      (click)="logout()">
+      تسجيل الخروج
+    </button>
+
+  </main>
+
+</div>

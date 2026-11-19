@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   categories = [
     { name: 'الهدايا', image: '/Images/h.jpeg' },
@@ -19,10 +26,25 @@ export class Home {
 
   searchTerm = '';
 
+  // التحقق من تسجيل الدخول
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  // التحقق من أن المستخدم مدير
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // تسجيل الخروج
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   scrollToProducts() {
     document.getElementById('products')?.scrollIntoView({
       behavior: 'smooth'
     });
   }
-
 }

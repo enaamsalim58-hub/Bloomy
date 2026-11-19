@@ -2,52 +2,100 @@
 
   <!-- Navbar -->
   <header class="navbar">
-    <a class="logo" routerLink="/">
+
+    <!-- شعار Bloomy يرجع للرئيسية -->
+    <a class="logo" routerLink="/home">
       <img src="/Images/logo.jpeg" alt="Bloomy">
       <span>Bloomy</span>
     </a>
 
+    <!-- Navigation Links -->
     <nav class="nav-links">
-      <a routerLink="/"
+
+      <!-- الرئيسية -->
+      <a routerLink="/home"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}">
         الرئيسية
       </a>
 
+      <!-- المنتجات -->
       <a routerLink="/products" routerLinkActive="active">
         المنتجات
       </a>
 
-      <a routerLink="/offers" routerLinkActive="active">
-        العروض
-      </a>
+      <!-- تتبع الطلبات للعميل فقط -->
+      @if (isLoggedIn && !isAdmin) {
+        <a routerLink="/my-orders" routerLinkActive="active">
+          تتبع الطلبات
+        </a>
+      }
 
-      <a routerLink="/contact" routerLinkActive="active">
-        تواصل معنا
-      </a>
-      <a routerLink="/login" routerLinkActive="active">
-    تسجيل الدخول
-     
-      </a>
+      <!-- لوحة التحكم للمدير فقط -->
+      @if (isAdmin) {
+        <a routerLink="/dashboard"
+           routerLinkActive="active"
+           class="dashboard-link">
+          لوحة التحكم
+        </a>
+      }
+
+      <!-- تسجيل الدخول للزائر -->
+      @if (!isLoggedIn) {
+        <a routerLink="/login" routerLinkActive="active">
+          تسجيل الدخول
+        </a>
+      }
+
+      <!-- تسجيل الخروج -->
+      @if (isLoggedIn) {
+        <a href="#" (click)="logout(); $event.preventDefault()">
+          تسجيل الخروج
+        </a>
+      }
 
     </nav>
 
+    <!-- Navbar Actions -->
     <div class="nav-actions">
-      <a routerLink="/cart" class="icon-link cart-icon" aria-label="السلة">
-      🛒
-      <span class="cart-count">0</span>
-      </a>
-      
-      
-      <a routerLink="/contact" class="icon-link user-icon" aria-label="حساب المستخدم">
-        <img src="/Images/user.png" alt="حساب المستخدم">
-      </a>
+
+      <!-- السلة للعميل فقط -->
+      @if (isLoggedIn && !isAdmin) {
+        <a routerLink="/cart"
+           class="icon-link cart-icon"
+           aria-label="السلة">
+          🛒
+          <span class="cart-count">0</span>
+        </a>
+      }
+
+      <!-- الملف الشخصي للمدير -->
+      @if (isLoggedIn && isAdmin) {
+        <a routerLink="/admin-profile"
+           class="icon-link user-icon"
+           aria-label="الملف الشخصي للمدير">
+          <img src="/Images/user.png" alt="الملف الشخصي للمدير">
+        </a>
+      }
+
+      <!-- الملف الشخصي للعميل -->
+      @if (isLoggedIn && !isAdmin) {
+        <a routerLink="/customer-profile"
+           class="icon-link user-icon"
+           aria-label="الملف الشخصي للعميل">
+          <img src="/Images/user.png" alt="الملف الشخصي للعميل">
+        </a>
+      }
+
     </div>
+
   </header>
 
   <!-- Hero -->
   <section class="hero">
+
     <div class="hero-content">
+
       <h1>
         اجعل لحظاتك
         <span>أكثر جمالاً</span>
@@ -62,58 +110,76 @@
       <a routerLink="/products" class="primary-button">
         تسوق الآن <span>←</span>
       </a>
+
     </div>
 
-    <div class="hero-decoration">
-     
-    </div>
+    <div class="hero-decoration"></div>
 
     <div class="hero-bottom">
       <span></span>
       <span></span>
       <span></span>
     </div>
+
   </section>
 
   <!-- Categories -->
   <section class="categories-section" id="categories">
+
     <div class="categories-grid">
+
       @for (category of categories; track category.name) {
+
         <a class="category-card" routerLink="/products">
+
           <div class="category-image">
             <img [src]="category.image" [alt]="category.name">
           </div>
+
           <h3>{{ category.name }}</h3>
+
         </a>
+
       }
+
     </div>
+
   </section>
 
   <!-- Products Preview -->
   <section class="products-section" id="products">
+
     <div class="section-heading">
       <span>اختيارات Bloomy</span>
       <h2>منتجاتنا المميزة</h2>
     </div>
 
     <div class="search-box">
+
       <span>⌕</span>
+
       <input
         type="search"
         placeholder="ابحثي عن المنتج..."
         aria-label="البحث عن المنتجات"
         (input)="searchTerm = $any($event.target).value">
+
     </div>
 
     <div class="empty-products">
+
       <span class="empty-icon">✿</span>
+
       <h3>منتجات Bloomy</h3>
+
       <p>ستظهر المنتجات هنا عند ربطها بقاعدة البيانات.</p>
 
       <a routerLink="/products" class="primary-button">
         عرض جميع المنتجات
       </a>
+
     </div>
+
   </section>
 
 </div>

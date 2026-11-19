@@ -522,4 +522,16 @@ html {
   .hero-content h1 {
     font-size: 29px;
   }
+} 
+
+
+/* رابط لوحة تحكم المدير */
+.nav-links .dashboard-link {
+  color: #a34e91;
+  font-weight: 900;
+}
+
+.nav-links .dashboard-link:hover,
+.nav-links .dashboard-link.active {
+  color: #71346f;
 }

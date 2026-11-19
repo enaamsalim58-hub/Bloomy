@@ -1,266 +1,439 @@
-<div class="admin-wrapper" dir="rtl">
-  <div class="dashboard-body">
-    <!-- القائمة الجانبية اليمنى -->
-    <aside class="sidebar">
-      <!-- منطقة الشعار بخلفية بيضاء ناصعة -->
-      <div class="sidebar-logo-box">
-        <a class="brand" routerLink="/">
-          <img src="/Images/logo.jpeg" alt="Bloomy">
-          <span>Bloomy</span>
-        </a>
-      </div>
 
-      <!-- قائمة الروابط بخلفية بنفسجي فاتح -->
-      <nav class="sidebar-menu">
-     <a class="side-item" routerLink="/dashboard">
-  <span class="side-icon">⌂</span>
-  <span>لوحة التحكم</span>
-</a>
-        <button class="side-item active">
-          <span class="side-icon">📦</span>
-          <span>المنتجات</span>
-        </button>
-       <a class="side-item" routerLink="/dashboard" [queryParams]="{ view: 'orders' }">
-           <span class="side-icon">🧾</span>
-          <span>الطلبات</span>
-        </a>
-        <a class="side-item" routerLink="/">
-          <span class="side-icon">👥</span>
-          <span>العملاء</span>
-        </a>
-        <a class="side-item" routerLink="/">
-          <span class="side-icon">📊</span>
-          <span>التقارير</span>
-        </a>
-        <a class="side-item" routerLink="/">
-          <span class="side-icon">⚙</span>
-          <span>الإعدادات</span>
-        </a>
-      </nav>
-    </aside>
+<main class="main-panel" dir="rtl">
 
-    <!-- المحتوى الرئيسي بخلفية بيضاء -->
-    <main class="main-panel">
-      <!-- التبويبات العلوية: المنتجات | التصنيفات -->
-      <div class="tabs-bar">
-        <button
-          class="tab-btn"
-          [class.active]="activeTab === 'products'"
-          (click)="switchTab('products')">
-          المنتجات
-        </button>
-        <button
-          class="tab-btn"
-          [class.active]="activeTab === 'categories'"
-          (click)="switchTab('categories')">
-          التصنيفات
-        </button>
-      </div>
+  <!-- التبويبات العلوية: المنتجات | التصنيفات -->
+  <div class="tabs-bar">
 
-      <!-- رسائل التنبيه -->
-      @if (statusMessage) {
-        <div class="alert success">{{ statusMessage }}</div>
-      }
-      @if (errorMessage) {
-        <div class="alert error">{{ errorMessage }}</div>
-      }
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'products'"
+      (click)="switchTab('products')">
+      المنتجات
+    </button>
 
-      <!-- ================= تبويب المنتجات ================= -->
-      @if (activeTab === 'products') {
-        <div class="controls-bar">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input
-              type="search"
-              [(ngModel)]="searchTerm"
-              placeholder="البحث عن منتج...">
-          </div>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'categories'"
+      (click)="switchTab('categories')">
+      التصنيفات
+    </button>
 
-          <button class="add-btn" (click)="openAddProduct()">
-            + إضافة منتج
-          </button>
-        </div>
-
-        @if (showProductForm) {
-          <section class="form-card">
-            <h3>{{ isEditingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h3>
-
-            <div class="form-grid">
-              <div class="field">
-                <label>اسم المنتج *</label>
-                <input type="text" [(ngModel)]="productForm.name" placeholder="مثال: باقة توليب وردي">
-              </div>
-
-              <div class="field">
-                <label>التصنيف *</label>
-                <select [(ngModel)]="productForm.categoryId">
-                  @for (cat of categories; track cat.categoryId) {
-                    <option [value]="cat.categoryId">{{ cat.name }}</option>
-                  }
-                </select>
-              </div>
-
-              <div class="field">
-                <label>السعر (ر.س) *</label>
-                <input type="number" min="1" [(ngModel)]="productForm.price">
-              </div>
-
-              <div class="field">
-                <label>الكمية *</label>
-                <input type="number" min="0" [(ngModel)]="productForm.stockQuantity">
-              </div>
-
-              <div class="field full">
-                <label>مسار الصورة</label>
-                <input type="text" [(ngModel)]="productForm.mainImageUrl" placeholder="/Images/f.jpeg">
-              </div>
-
-              <div class="field full">
-                <label>الوصف</label>
-                <input type="text" [(ngModel)]="productForm.description" placeholder="وصف مختصر للمنتج...">
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button class="add-btn" (click)="saveProduct()">
-                {{ isEditingProduct ? 'حفظ التعديلات' : 'حفظ المنتج' }}
-              </button>
-              <button class="cancel-btn" (click)="showProductForm = false">إلغاء</button>
-            </div>
-          </section>
-        }
-
-        <section class="card-box">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>الصورة</th>
-                  <th>اسم المنتج</th>
-                  <th>السعر</th>
-                  <th>الكمية</th>
-                  <th>الحالة</th>
-                  <th>الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (item of filteredProducts; track item.productId) {
-                  <tr>
-                    <td>
-                      <img [src]="item.mainImageUrl" [alt]="item.name" class="thumb-img">
-                    </td>
-                    <td class="product-name">{{ item.name }}</td>
-                    <td class="price-text">{{ item.price }} ر.س</td>
-                    <td>{{ item.stockQuantity }}</td>
-                    <td>
-                      <span
-                        class="badge"
-                        [class.available]="item.isAvailable"
-                        [class.unavailable]="!item.isAvailable">
-                        {{ item.isAvailable ? 'متوفر' : 'غير متوفر' }}
-                      </span>
-                    </td>
-                    <td class="actions-cell">
-                      <button class="icon-action edit" title="تعديل" (click)="openEditProduct(item)">
-                        ✎
-                      </button>
-                      <button class="icon-action delete" title="حذف" (click)="deleteProduct(item)">
-                        🗑
-                      </button>
-                    </td>
-                  </tr>
-                } @empty {
-                  <tr>
-                    <td colspan="6" class="empty-row">لا توجد منتجات مطابقة للبحث.</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-
-          <!-- أرقام الصفحات مطابقة للصورة (1، 2، 3) -->
-          <div class="pagination">
-            <button class="page-btn" (click)="selectPage(currentPage + 1)">»</button>
-            <button class="page-btn" [class.active]="currentPage === 3" (click)="selectPage(3)">3</button>
-            <button class="page-btn" [class.active]="currentPage === 2" (click)="selectPage(2)">2</button>
-            <button class="page-btn" [class.active]="currentPage === 1" (click)="selectPage(1)">1</button>
-            <button class="page-btn" (click)="selectPage(currentPage - 1)">«</button>
-          </div>
-        </section>
-      }
-
-      <!-- ================= تبويب التصنيفات ================= -->
-      @if (activeTab === 'categories') {
-        <div class="controls-bar">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input
-              type="search"
-              [(ngModel)]="categorySearchTerm"
-              placeholder="البحث عن تصنيف...">
-          </div>
-
-          <button class="add-btn" (click)="openAddCategory()">
-            + إضافة تصنيف
-          </button>
-        </div>
-
-        @if (showCategoryForm) {
-          <section class="form-card">
-            <h3>{{ isEditingCategory ? 'تعديل التصنيف' : 'إضافة تصنيف جديد' }}</h3>
-            <div class="form-grid">
-              <div class="field">
-                <label>اسم التصنيف *</label>
-                <input type="text" [(ngModel)]="categoryForm.name" placeholder="مثال: باقات تخرج">
-              </div>
-              <div class="field">
-                <label>مسار الصورة</label>
-                <input type="text" [(ngModel)]="categoryForm.imageUrl" placeholder="/Images/h.jpeg">
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="add-btn" (click)="saveCategory()">
-                {{ isEditingCategory ? 'حفظ التعديلات' : 'حفظ التصنيف' }}
-              </button>
-              <button class="cancel-btn" (click)="showCategoryForm = false">إلغاء</button>
-            </div>
-          </section>
-        }
-
-        <section class="card-box">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>الصورة</th>
-                  <th>اسم التصنيف</th>
-                  <th>عدد المنتجات</th>
-                  <th>الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (cat of filteredCategories; track cat.categoryId) {
-                  <tr>
-                    <td>
-                      <img [src]="cat.imageUrl" [alt]="cat.name" class="thumb-img">
-                    </td>
-                    <td class="product-name">{{ cat.name }}</td>
-                    <td>{{ getCategoryProductsCount(cat.categoryId) }} منتج</td>
-                    <td class="actions-cell">
-                      <button class="icon-action edit" title="تعديل" (click)="openEditCategory(cat)">
-                        ✎
-                      </button>
-                      <button class="icon-action delete" title="حذف" (click)="deleteCategory(cat)">
-                        🗑
-                      </button>
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-        </section>
-      }
-    </main>
   </div>
-</div>
+
+  <!-- رسائل التنبيه -->
+  @if (statusMessage) {
+    <div class="alert success">{{ statusMessage }}</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert error">{{ errorMessage }}</div>
+  }
+
+
+  <!-- ================= تبويب المنتجات ================= -->
+  @if (activeTab === 'products') {
+
+    <div class="controls-bar">
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          placeholder="البحث عن منتج...">
+      </div>
+
+      <button class="add-btn" (click)="openAddProduct()">
+        + إضافة منتج
+      </button>
+
+    </div>
+
+
+    <!-- نموذج إضافة وتعديل المنتج -->
+    @if (showProductForm) {
+
+      <section class="form-card">
+
+        <h3>
+          {{ isEditingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد' }}
+        </h3>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>اسم المنتج *</label>
+
+            <input
+              type="text"
+              [(ngModel)]="productForm.name"
+              placeholder="مثال: باقة توليب وردي">
+          </div>
+
+
+          <div class="field">
+            <label>التصنيف *</label>
+
+            <select [(ngModel)]="productForm.categoryId">
+
+              @for (cat of categories; track cat.categoryId) {
+                <option [value]="cat.categoryId">
+                  {{ cat.name }}
+                </option>
+              }
+
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label>السعر (ر.س) *</label>
+
+            <input
+              type="number"
+              min="1"
+              [(ngModel)]="productForm.price">
+          </div>
+
+
+          <div class="field">
+            <label>الكمية *</label>
+
+            <input
+              type="number"
+              min="0"
+              [(ngModel)]="productForm.stockQuantity">
+          </div>
+
+
+          <div class="field full">
+            <label>مسار الصورة</label>
+
+            <input
+              type="text"
+              [(ngModel)]="productForm.mainImageUrl"
+              placeholder="/Images/f.jpeg">
+          </div>
+
+
+          <div class="field full">
+            <label>الوصف</label>
+
+            <input
+              type="text"
+              [(ngModel)]="productForm.description"
+              placeholder="وصف مختصر للمنتج...">
+          </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button class="add-btn" (click)="saveProduct()">
+            {{ isEditingProduct ? 'حفظ التعديلات' : 'حفظ المنتج' }}
+          </button>
+
+          <button
+            class="cancel-btn"
+            (click)="showProductForm = false">
+            إلغاء
+          </button>
+
+        </div>
+
+      </section>
+
+    }
+
+
+    <!-- جدول المنتجات -->
+    <section class="card-box">
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>الصورة</th>
+              <th>اسم المنتج</th>
+              <th>السعر</th>
+              <th>الكمية</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+            @for (item of filteredProducts; track item.productId) {
+
+              <tr>
+
+                <td>
+                  <img
+                    [src]="item.mainImageUrl"
+                    [alt]="item.name"
+                    class="thumb-img">
+                </td>
+
+                <td class="product-name">
+                  {{ item.name }}
+                </td>
+
+                <td class="price-text">
+                  {{ item.price }} ر.س
+                </td>
+
+                <td>
+                  {{ item.stockQuantity }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="badge"
+                    [class.available]="item.isAvailable"
+                    [class.unavailable]="!item.isAvailable">
+
+                    {{ item.isAvailable ? 'متوفر' : 'غير متوفر' }}
+
+                  </span>
+
+                </td>
+
+                <td class="actions-cell">
+
+                  <button
+                    class="icon-action edit"
+                    title="تعديل"
+                    (click)="openEditProduct(item)">
+                    ✎
+                  </button>
+
+                  <button
+                    class="icon-action delete"
+                    title="حذف"
+                    (click)="deleteProduct(item)">
+                    🗑
+                  </button>
+
+                </td>
+
+              </tr>
+
+            } @empty {
+
+              <tr>
+                <td colspan="6" class="empty-row">
+                  لا توجد منتجات مطابقة للبحث.
+                </td>
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- أرقام الصفحات -->
+      <div class="pagination">
+
+        <button
+          class="page-btn"
+          (click)="selectPage(currentPage + 1)">
+          »
+        </button>
+
+        <button
+          class="page-btn"
+          [class.active]="currentPage === 3"
+          (click)="selectPage(3)">
+          3
+        </button>
+
+        <button
+          class="page-btn"
+          [class.active]="currentPage === 2"
+          (click)="selectPage(2)">
+          2
+        </button>
+
+        <button
+          class="page-btn"
+          [class.active]="currentPage === 1"
+          (click)="selectPage(1)">
+          1
+        </button>
+
+        <button
+          class="page-btn"
+          (click)="selectPage(currentPage - 1)">
+          «
+        </button>
+
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- ================= تبويب التصنيفات ================= -->
+  @if (activeTab === 'categories') {
+
+    <div class="controls-bar">
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+
+        <input
+          type="search"
+          [(ngModel)]="categorySearchTerm"
+          placeholder="البحث عن تصنيف...">
+      </div>
+
+      <button class="add-btn" (click)="openAddCategory()">
+        + إضافة تصنيف
+      </button>
+
+    </div>
+
+
+    <!-- نموذج إضافة وتعديل التصنيف -->
+    @if (showCategoryForm) {
+
+      <section class="form-card">
+
+        <h3>
+          {{ isEditingCategory ? 'تعديل التصنيف' : 'إضافة تصنيف جديد' }}
+        </h3>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>اسم التصنيف *</label>
+
+            <input
+              type="text"
+              [(ngModel)]="categoryForm.name"
+              placeholder="مثال: باقات تخرج">
+          </div>
+
+
+          <div class="field">
+            <label>مسار الصورة</label>
+
+            <input
+              type="text"
+              [(ngModel)]="categoryForm.imageUrl"
+              placeholder="/Images/h.jpeg">
+          </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button class="add-btn" (click)="saveCategory()">
+            {{ isEditingCategory ? 'حفظ التعديلات' : 'حفظ التصنيف' }}
+          </button>
+
+          <button
+            class="cancel-btn"
+            (click)="showCategoryForm = false">
+            إلغاء
+          </button>
+
+        </div>
+
+      </section>
+
+    }
+
+
+    <!-- جدول التصنيفات -->
+    <section class="card-box">
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>الصورة</th>
+              <th>اسم التصنيف</th>
+              <th>عدد المنتجات</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+            @for (cat of filteredCategories; track cat.categoryId) {
+
+              <tr>
+
+                <td>
+                  <img
+                    [src]="cat.imageUrl"
+                    [alt]="cat.name"
+                    class="thumb-img">
+                </td>
+
+                <td class="product-name">
+                  {{ cat.name }}
+                </td>
+
+                <td>
+                  {{ getCategoryProductsCount(cat.categoryId) }} منتج
+                </td>
+
+                <td class="actions-cell">
+
+                  <button
+                    class="icon-action edit"
+                    title="تعديل"
+                    (click)="openEditCategory(cat)">
+                    ✎
+                  </button>
+
+                  <button
+                    class="icon-action delete"
+                    title="حذف"
+                    (click)="deleteCategory(cat)">
+                    🗑
+                  </button>
+
+                </td>
+
+              </tr>
+
+            } @empty {
+
+              <tr>
+                <td colspan="4" class="empty-row">
+                  لا توجد تصنيفات.
+                </td>
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  }
+
+</main>

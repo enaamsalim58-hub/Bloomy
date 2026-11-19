@@ -1,12 +1,12 @@
+
 <div class="admin-layout" dir="rtl">
 
   <!-- القائمة الجانبية -->
   <aside class="admin-sidebar">
 
-    <div class="brand">
-      <span class="logo-icon">🌸</span>
-      <h2>Bloomy</h2>
-    </div>
+  <a routerLink="/home" class="brand">
+     <h2>Bloomy 🌸</h2>
+  </a>
 
     <nav class="admin-nav">
 
@@ -17,8 +17,11 @@
         🏠 لوحة التحكم
       </a>
 
-      <a class="nav-item" routerLink="/manage-products">
-        💐 المنتجات
+      <a
+        class="nav-item"
+        [class.active]="activeView === 'products'"
+        (click)="showProducts()">
+        💐 إدارة المنتجات
       </a>
 
       <a
@@ -55,6 +58,12 @@
 
   <!-- المحتوى الرئيسي -->
   <div class="admin-main">
+
+    <!-- إدارة المنتجات -->
+    <ng-container *ngIf="activeView === 'products'">
+      <app-manage-products></app-manage-products>
+    </ng-container>
+
 
     <!-- لوحة التحكم الرئيسية -->
     <ng-container *ngIf="activeView === 'dashboard'">

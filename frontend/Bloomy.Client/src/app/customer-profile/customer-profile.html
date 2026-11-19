@@ -1,0 +1,66 @@
+<div class="profile-page">
+
+  <header class="profile-header">
+    <a routerLink="/home" class="logo">Bloomy 🌸</a>
+    <span>الملف الشخصي</span>
+  </header>
+
+  <main class="profile-container">
+
+    <div class="profile-icon">👤</div>
+
+    <h2>ملفي الشخصي</h2>
+    <p class="subtitle">أهلاً بكِ في عالم Bloomy 🌷</p>
+
+    <section class="profile-card">
+      <h3>المعلومات الشخصية</h3>
+
+      <label>الاسم الكامل</label>
+      <input
+        type="text"
+        [(ngModel)]="customerData.fullName"
+        placeholder="أدخلي اسمك">
+
+      <label>البريد الإلكتروني</label>
+      <input
+        type="email"
+        [(ngModel)]="customerData.email"
+        placeholder="أدخلي بريدك الإلكتروني">
+
+      <label>رقم الهاتف</label>
+      <input
+        type="tel"
+        [(ngModel)]="customerData.phone"
+        placeholder="أدخلي رقم هاتفك">
+
+      <button type="button" class="save-btn" (click)="saveProfile()">
+        حفظ التعديلات
+      </button>
+    </section>
+
+    <section class="profile-card">
+      <h3>تغيير كلمة المرور</h3>
+
+      <label>كلمة المرور الحالية</label>
+      <input
+        type="password"
+        [(ngModel)]="currentPassword"
+        placeholder="كلمة المرور الحالية">
+
+      <label>كلمة المرور الجديدة</label>
+      <input
+        type="password"
+        [(ngModel)]="newPassword"
+        placeholder="كلمة المرور الجديدة">
+
+      <button type="button" class="password-btn" (click)="changePassword()">
+        حفظ كلمة المرور الجديدة
+      </button>
+    </section>
+
+    <button type="button" class="logout-btn" (click)="logout()">
+      تسجيل الخروج
+    </button>
+
+  </main>
+</div>

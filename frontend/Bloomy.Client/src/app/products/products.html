@@ -1,25 +1,25 @@
 <div class="products-page" dir="rtl">
 
-  <header class="products-header">
-    <a routerLink="/" class="logo">
-      <img src="/Images/logo.jpeg" alt="Bloomy">
-      <span>Bloomy</span>
-    </a>
+  <!-- Header -->
+<header class="products-header">
 
-    <nav>
-      <a routerLink="/">الرئيسية</a>
-      <a routerLink="/products" class="active">المنتجات</a>
-      <a routerLink="/contact">تواصل معنا</a>
-    </nav>
+  <!-- شعار Bloomy يرجع للرئيسية -->
 
-    <a routerLink="/cart" class="cart">🛒</a>
-  </header>
+  <a routerLink="/home" class="logo">     <img src="/Images/logo.jpeg" alt="Bloomy">     <span>Bloomy</span>   </a>
 
+  <nav>     <a routerLink="/products" class="active">المنتجات</a>   </nav>
+
+<a routerLink="/cart" class="cart">🛒</a>
+
+</header>
+
+  <!-- Hero -->
   <section class="products-hero">
     <h1>اكتشفي عالم Bloomy</h1>
     <p>اختاري أجمل الورود والهدايا لمن تحبين</p>
   </section>
 
+  <!-- Products Content -->
   <main class="products-content">
 
     <div class="section-heading">
@@ -27,6 +27,7 @@
       <p>اختاري التصنيف المفضل لديكِ</p>
     </div>
 
+    <!-- Categories -->
     <div class="categories">
       <button>🌹 باقات الورود</button>
       <button>🎁 الهدايا</button>
@@ -34,11 +35,13 @@
       <button>🧸 الدمى</button>
     </div>
 
+    <!-- Featured Products -->
     <div class="section-heading">
       <h2>منتجاتنا المميزة</h2>
       <p>اختيارات جميلة لكل مناسباتك</p>
     </div>
 
+    <!-- Products Grid -->
     <div class="products-grid">
 
       <article class="product-card">
@@ -84,5 +87,5 @@
     </div>
 
   </main>
-</div>
 
+</div>

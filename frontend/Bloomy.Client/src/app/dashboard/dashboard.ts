@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { ManageProducts } from '../manage-products/manage-products';
+
 import {
   RouterModule,
   ActivatedRoute,
@@ -10,6 +12,7 @@ import {
 
 type DashboardView =
   | 'dashboard'
+  | 'products'
   | 'orders'
   | 'customers'
   | 'reports'
@@ -38,7 +41,8 @@ interface ManagerCustomer {
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ManageProducts
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
@@ -60,6 +64,7 @@ export class Dashboard implements OnInit {
       const view = params.get('view');
 
       if (
+        view === 'products' ||
         view === 'orders' ||
         view === 'customers' ||
         view === 'reports' ||
@@ -194,6 +199,13 @@ export class Dashboard implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
+  // فتح إدارة المنتجات
+  showProducts(): void {
+    this.router.navigate(['/dashboard'], {
+      queryParams: { view: 'products' }
+    });
+  }
+
   // فتح إدارة الطلبات
   showOrders(): void {
     this.router.navigate(['/dashboard'], {
@@ -254,7 +266,9 @@ export class Dashboard implements OnInit {
       return;
     }
 
+    oldItem.count++;
     oldItem.count--;
+
     newItem.count++;
 
     order.status = newStatus;
