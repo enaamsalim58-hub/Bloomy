@@ -20,10 +20,10 @@ import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { ProductDetails } from './product-details/product-details';
 import { Cart } from './cart/cart';
-import {Products} from './products/products';
 import { Products } from './products/products';
 import { ManageProducts } from './manage-products/manage-products';
 import { Login } from './login/login';
+import { adminGuard } from './services/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -34,6 +34,7 @@ export const routes: Routes = [
   { path: 'about', component: About },
   { path: 'contact', component: Contact },
   { path: 'login', component: Login },
+  { path: 'manage-products', component: ManageProducts, canActivate: [adminGuard] },
   { path: '**', redirectTo: '' },
   
 ];

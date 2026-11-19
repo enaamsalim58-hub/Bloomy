@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // 1. استيراد أداة التوجيه
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +27,8 @@ export class Login {
     password: ''
   };
 
-  // 2. حقن الـ Router في البناء (constructor)
-  constructor(private router: Router) {}
+  // حقن خدمة المصادقة AuthService
+  constructor(private authService: AuthService) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -40,15 +40,33 @@ export class Login {
 
   onLogin() {
     console.log('بيانات تسجيل الدخول:', this.loginData);
+
+    // تحديد الصلاحية مؤقتاً لحين ربط الـ API (إذا احتوى البريد على admin يدخل كأدمن)
+    const isAdmin = this.loginData.email.trim().toLowerCase().includes('admin');
+
+    this.authService.setSession({
+      token: 'bloomy-temp-token',
+      role: isAdmin ? 'admin' : 'user',
+      email: this.loginData.email
+    });
+
     alert('تم تسجيل الدخول بنجاح!');
-    
-    // 3. التوجيه تلقائياً إلى الصفحة الرئيسية للموقع بعد تسجيل الدخول
-    this.router.navigate(['/']);
+
+    // التوجيه تلقائياً حسب الدور (admin -> /manage-products ، user -> /products)
+    this.authService.redirectByRole();
   }
 
   onRegister() {
     console.log('بيانات إنشاء حساب:', this.registerData);
+
+    // الحسابات الجديدة تكون بصلاحية مستخدم عادي (user)
+    this.authService.setSession({
+      token: 'bloomy-temp-token',
+      role: 'user',
+      email: this.registerData.email
+    });
+
     alert('تم إنشاء الحساب بنجاح!');
-    this.router.navigate(['/']);
+    this.authService.redirectByRole();
   }
 }
