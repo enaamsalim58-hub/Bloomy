@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -28,32 +29,37 @@ export class AdminProfile {
     private authService: AuthService,
     private router: Router
   ) {
+
     const user = this.authService.currentUser;
 
-    if (user?.role !== 'admin') {
+    if (!user || user.role !== 'admin') {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.adminData.fullName = user.fullName;
-    this.adminData.email = user.email;
+    this.adminData = {
+      fullName: user.fullName,
+      email: user.email
+    };
   }
 
-  saveProfile() {
+  saveProfile(): void {
+
     const success = this.authService.updateAdminProfile(
       this.adminData.fullName,
       this.adminData.email
     );
 
     if (!success) {
-      alert('البريد الإلكتروني مستخدم بالفعل');
+      alert('البريد الإلكتروني مستخدم بالفعل أو البيانات غير صحيحة');
       return;
     }
 
     alert('تم تحديث بيانات المدير بنجاح 🌸');
   }
 
-  changePassword() {
+  changePassword(): void {
+
     if (
       !this.passwordData.currentPassword ||
       !this.passwordData.newPassword ||
@@ -77,7 +83,7 @@ export class AdminProfile {
     );
 
     if (!success) {
-      alert('كلمة المرور الحالية غير صحيحة');
+      alert('كلمة المرور الحالية غير صحيحة أو الجديدة قصيرة');
       return;
     }
 
@@ -90,8 +96,9 @@ export class AdminProfile {
     };
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }

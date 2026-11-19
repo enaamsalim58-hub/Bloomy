@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
+
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -24,27 +33,21 @@ export class Home {
     { name: 'باقات الورود', image: '/Images/f.jpeg' }
   ];
 
-  searchTerm = '';
-
-  // التحقق من تسجيل الدخول
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  // التحقق من أن المستخدم مدير
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
 
-  // تسجيل الخروج
-  logout() {
+  get isCustomer(): boolean {
+    return this.authService.isCustomer();
+  }
+
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
 
-  scrollToProducts() {
-    document.getElementById('products')?.scrollIntoView({
-      behavior: 'smooth'
-    });
-  }
 }

@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -27,36 +26,46 @@ export class AuthService {
     password: string;
   }[] = [];
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private currentUserSubject =
+    new BehaviorSubject<User | null>(null);
+
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor() {
-    // استرجاع حسابات العملاء
+
+    // استرجاع حسابات العملاء المحفوظة
     const savedCustomers = localStorage.getItem('bloomy_customers');
 
     if (savedCustomers) {
-      this.customers = JSON.parse(savedCustomers);
+      try {
+        this.customers = JSON.parse(savedCustomers);
+      } catch {
+        this.customers = [];
+      }
     }
 
-    // استرجاع بيانات المدير
+    // استرجاع بيانات المدير المحفوظة
     const savedAdmin = localStorage.getItem('bloomy_admin');
 
     if (savedAdmin) {
-      this.admin = JSON.parse(savedAdmin);
+      try {
+        this.admin = JSON.parse(savedAdmin);
+      } catch {
+        // الاحتفاظ ببيانات المدير الافتراضية
+      }
     }
 
-    // استرجاع المستخدم المسجل دخوله
-    const savedUser = localStorage.getItem('bloomy_current_user');
+    // حذف جلسة تسجيل الدخول السابقة
+    // حتى يبدأ المشروع دائماً بواجهة الزائر
+    localStorage.removeItem('bloomy_current_user');
 
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
-    }
   }
 
   get currentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
+  // حفظ حسابات العملاء
   private saveCustomers(): void {
     localStorage.setItem(
       'bloomy_customers',
@@ -64,22 +73,22 @@ export class AuthService {
     );
   }
 
+  // تحديد المستخدم الحالي خلال الجلسة
   private setCurrentUser(user: User): void {
     this.currentUserSubject.next(user);
-
-    localStorage.setItem(
-      'bloomy_current_user',
-      JSON.stringify(user)
-    );
   }
 
+  // تسجيل الدخول
   login(email: string, password: string): User | null {
+
     const normalizedEmail = email.trim().toLowerCase();
 
+    // التحقق من حساب المدير
     if (
       normalizedEmail === this.admin.email.toLowerCase() &&
       password === this.admin.password
     ) {
+
       const user: User = {
         fullName: this.admin.fullName,
         email: this.admin.email,
@@ -87,9 +96,11 @@ export class AuthService {
       };
 
       this.setCurrentUser(user);
+
       return user;
     }
 
+    // التحقق من حساب العميل
     const customer = this.customers.find(
       c =>
         c.email.toLowerCase() === normalizedEmail &&
@@ -97,6 +108,7 @@ export class AuthService {
     );
 
     if (customer) {
+
       const user: User = {
         fullName: customer.fullName,
         email: customer.email,
@@ -105,12 +117,14 @@ export class AuthService {
       };
 
       this.setCurrentUser(user);
+
       return user;
     }
 
     return null;
   }
 
+  // إنشاء حساب عميل جديد
   register(data: {
     fullName: string;
     email: string;
@@ -122,7 +136,9 @@ export class AuthService {
 
     const emailExists =
       email === this.admin.email.toLowerCase() ||
-      this.customers.some(c => c.email.toLowerCase() === email);
+      this.customers.some(
+        c => c.email.toLowerCase() === email
+      );
 
     if (emailExists) {
       return false;
@@ -140,6 +156,7 @@ export class AuthService {
     return true;
   }
 
+  // تحديث بيانات العميل
   updateCustomerProfile(
     fullName: string,
     email: string,
@@ -148,11 +165,15 @@ export class AuthService {
 
     const user = this.currentUser;
 
-    if (!user || user.role !== 'customer') return false;
+    if (!user || user.role !== 'customer') {
+      return false;
+    }
 
     const newEmail = email.trim().toLowerCase();
 
-    if (!fullName.trim() || !newEmail) return false;
+    if (!fullName.trim() || !newEmail) {
+      return false;
+    }
 
     const emailExists =
       newEmail === this.admin.email.toLowerCase() ||
@@ -162,13 +183,17 @@ export class AuthService {
           c.email.toLowerCase() !== user.email.toLowerCase()
       );
 
-    if (emailExists) return false;
+    if (emailExists) {
+      return false;
+    }
 
     const customer = this.customers.find(
       c => c.email.toLowerCase() === user.email.toLowerCase()
     );
 
-    if (!customer) return false;
+    if (!customer) {
+      return false;
+    }
 
     customer.fullName = fullName.trim();
     customer.email = newEmail;
@@ -186,6 +211,7 @@ export class AuthService {
     return true;
   }
 
+  // تغيير كلمة مرور العميل
   changeCustomerPassword(
     currentPassword: string,
     newPassword: string
@@ -193,7 +219,11 @@ export class AuthService {
 
     const user = this.currentUser;
 
-    if (!user || user.role !== 'customer' || newPassword.length < 3) {
+    if (
+      !user ||
+      user.role !== 'customer' ||
+      newPassword.length < 3
+    ) {
       return false;
     }
 
@@ -206,26 +236,39 @@ export class AuthService {
     }
 
     customer.password = newPassword;
+
     this.saveCustomers();
 
     return true;
   }
 
-  updateAdminProfile(fullName: string, email: string): boolean {
+  // تحديث بيانات المدير
+  updateAdminProfile(
+    fullName: string,
+    email: string
+  ): boolean {
+
     const newEmail = email.trim().toLowerCase();
 
-    if (!fullName.trim() || !newEmail) return false;
+    if (!fullName.trim() || !newEmail) {
+      return false;
+    }
 
     const emailExists = this.customers.some(
       c => c.email.toLowerCase() === newEmail
     );
 
-    if (emailExists) return false;
+    if (emailExists) {
+      return false;
+    }
 
     this.admin.fullName = fullName.trim();
     this.admin.email = newEmail;
 
-    localStorage.setItem('bloomy_admin', JSON.stringify(this.admin));
+    localStorage.setItem(
+      'bloomy_admin',
+      JSON.stringify(this.admin)
+    );
 
     this.setCurrentUser({
       fullName: this.admin.fullName,
@@ -236,6 +279,7 @@ export class AuthService {
     return true;
   }
 
+  // تغيير كلمة مرور المدير
   changeAdminPassword(
     currentPassword: string,
     newPassword: string
@@ -250,25 +294,36 @@ export class AuthService {
 
     this.admin.password = newPassword;
 
-    localStorage.setItem('bloomy_admin', JSON.stringify(this.admin));
+    localStorage.setItem(
+      'bloomy_admin',
+      JSON.stringify(this.admin)
+    );
 
     return true;
   }
 
+  // تسجيل الخروج
   logout(): void {
+
     this.currentUserSubject.next(null);
+
     localStorage.removeItem('bloomy_current_user');
+
   }
 
+  // هل المستخدم مسجل الدخول؟
   isLoggedIn(): boolean {
     return this.currentUser !== null;
   }
 
+  // هل المستخدم مدير؟
   isAdmin(): boolean {
     return this.currentUser?.role === 'admin';
   }
 
+  // هل المستخدم عميل؟
   isCustomer(): boolean {
     return this.currentUser?.role === 'customer';
   }
+
 }

@@ -1,0 +1,306 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  font-family: "Cairo", Tahoma, sans-serif;
+  color: #513450;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.contact-page {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fffafd;
+}
+
+/* Header */
+.contact-header {
+  width: 100%;
+  height: 82px;
+  min-height: 82px;
+  padding: 8px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fffafd;
+  box-shadow: 0 3px 15px rgba(70, 35, 70, 0.07);
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #71346f;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Background */
+.contact-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 5%;
+
+  background:
+    linear-gradient(
+      rgba(250, 245, 252, 0.25),
+      rgba(246, 238, 250, 0.30)
+    ),
+    url('/Images/about.jpg') center center / cover no-repeat;
+
+  overflow: hidden;
+}
+
+/* Main Card */
+.contact-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px 35px;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #eaddec;
+  border-radius: 25px;
+  box-shadow: 0 10px 35px rgba(94, 48, 94, 0.12);
+}
+
+/* Heading */
+.welcome-text {
+  display: block;
+  color: #a45192;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.contact-card h1 {
+  color: #513450;
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.title-line {
+  width: 75px;
+  height: 4px;
+  margin: 12px auto 18px;
+  border-radius: 10px;
+  background: #b45c9c;
+}
+
+/* Description */
+.contact-description {
+  max-width: 600px;
+  margin: 0 auto 15px;
+  color: #684b6b;
+  font-size: 16px;
+  line-height: 2;
+}
+
+/* Contact Options */
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 15px;
+  background: #f8f0fa;
+  border: 1px solid #ead8ee;
+  border-radius: 17px;
+  text-decoration: none;
+  color: #513450;
+  text-align: right;
+  transition: 0.3s;
+}
+
+.contact-item:hover {
+  background: #eee2f3;
+  border-color: #c99bcf;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 18px rgba(94, 48, 94, 0.09);
+}
+
+/* Icons */
+.contact-icon {
+  width: 53px;
+  height: 53px;
+  min-width: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #eee2f3;
+  font-size: 27px;
+}
+
+.whatsapp .contact-icon {
+  background: #e7f5e9;
+}
+
+.instagram .contact-icon {
+  background: #f7e7f2;
+}
+
+.email .contact-icon {
+  background: #eae3f6;
+}
+
+/* Text */
+.contact-info {
+  flex: 1;
+}
+
+.contact-info h3 {
+  color: #71346f;
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 5px;
+}
+
+.contact-info p {
+  color: #856b87;
+  font-size: 14px;
+  margin: 0;
+}
+
+.arrow {
+  color: #a45192;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Bottom Motto */
+.contact-motto {
+  max-width: 600px;
+  margin: 12px auto 0;
+  padding: 9px;
+  border-radius: 15px;
+  background: #eee2f3;
+  border: 1px solid #dfcce9;
+}
+
+.contact-motto span {
+  color: #71346f;
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.contact-motto p {
+  color: #684b6b;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 5px 0 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .contact-header {
+    height: 70px;
+    min-height: 70px;
+    padding: 8px 5%;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .logo img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .contact-main {
+    padding: 15px 5%;
+  }
+
+  .contact-card {
+    padding: 20px 18px;
+    border-radius: 20px;
+  }
+
+  .contact-card h1 {
+    font-size: 29px;
+  }
+
+  .contact-description {
+    font-size: 14px;
+  }
+
+  .contact-item {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .contact-icon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    font-size: 23px;
+  }
+
+  .contact-info h3 {
+    font-size: 16px;
+  }
+
+  .contact-info p {
+    font-size: 12px;
+  }
+}
+
+/* Short Screens */
+@media (max-height: 700px) {
+  .contact-card {
+    padding: 12px 25px;
+  }
+
+  .contact-card h1 {
+    font-size: 28px;
+  }
+
+  .contact-description {
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .contact-item {
+    padding: 7px 12px;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .contact-motto {
+    margin-top: 8px;
+    padding: 6px;
+  }
+}

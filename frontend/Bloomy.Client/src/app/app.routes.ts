@@ -15,24 +15,35 @@ import { AdminProfile } from './admin-profile/admin-profile';
 import { CustomerProfile } from './customer-profile/customer-profile';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  { path: 'login', component: Login },
+  // الصفحة الرئيسية هي أول صفحة تظهر للزائر
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  // الصفحات الأساسية
   { path: 'home', component: Home },
-
-  { path: 'products', component: Products },
-  { path: 'product/:id', component: ProductDetails },
-  { path: 'cart', component: Cart },
   { path: 'about', component: About },
   { path: 'contact', component: Contact },
 
-  { path: 'my-orders', component: MyOrders },
+  // تسجيل الدخول وإنشاء الحساب
+  { path: 'login', component: Login },
 
+  // صفحات المنتجات
+  { path: 'products', component: Products },
+  { path: 'product/:id', component: ProductDetails },
+
+  // سلة المشتريات
+  { path: 'cart', component: Cart },
+
+  // صفحات العميل
+  { path: 'my-orders', component: MyOrders },
+  { path: 'customer-profile', component: CustomerProfile },
+
+  // صفحات المدير
   { path: 'dashboard', component: Dashboard },
   { path: 'admin-profile', component: AdminProfile },
   { path: 'manage-products', component: ManageProducts },
 
-  { path: 'customer-profile', component: CustomerProfile },
+  // أي رابط غير معروف يرجع للرئيسية
+  { path: '**', redirectTo: 'home' }
 
-  { path: '**', redirectTo: 'login' }
 ];

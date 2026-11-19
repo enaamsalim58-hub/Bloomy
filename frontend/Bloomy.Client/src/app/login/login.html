@@ -1,160 +1,217 @@
-<div class="auth-container" dir="rtl">
-  <div class="auth-card">
+<div class="login-page" dir="rtl">
 
-    <!-- الشعار -->
-    <div class="auth-header">
-      <h2>Bloomy</h2>
-      <p>متجر الورود والهدايا</p>
+  <!-- شريط التنقل الأبيض -->
+  <header class="login-navbar">
+
+    <a routerLink="/home" class="logo">
+      <img src="/Images/logo.jpeg" alt="Bloomy">
+      <span>Bloomy</span>
+    </a>
+
+  </header>
+
+
+  <!-- خلفية صفحة تسجيل الدخول -->
+  <main class="auth-container">
+
+    <div class="auth-card">
+
+      <!-- الشعار والعنوان -->
+      <div class="auth-header">
+
+        <h2>Bloomy</h2>
+
+        <p>متجر الورود والهدايا</p>
+
+      </div>
+
+
+      <!-- نموذج تسجيل الدخول -->
+      <form
+        *ngIf="isLoginMode"
+        (ngSubmit)="onLogin()"
+        class="auth-form">
+
+        <div class="input-group">
+
+          <label>البريد الإلكتروني</label>
+
+          <input
+            type="email"
+            [(ngModel)]="loginData.email"
+            name="email"
+            placeholder="example@domain.com"
+            required>
+
+        </div>
+
+
+        <div class="input-group password-group">
+
+          <label>كلمة المرور</label>
+
+          <div class="password-wrapper" style="position: relative;">
+
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="loginData.password"
+              name="password"
+              placeholder="********"
+              required
+              style="width: 100%;">
+
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #994b94; font-weight: bold;">
+
+              {{ showPassword ? 'إخفاء' : 'إظهار' }}
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="auth-options">
+
+          <label class="remember-me">
+
+            <input type="checkbox">
+
+            تذكرني
+
+          </label>
+
+          <a href="#" class="forgot-password">
+            نسيت كلمة المرور؟
+          </a>
+
+        </div>
+
+
+        <button type="submit" class="submit-btn">
+          تسجيل الدخول
+        </button>
+
+
+        <div class="register-link">
+
+          ليس لديك حساب؟
+
+          <a
+            href="#"
+            (click)="showRegisterForm(); $event.preventDefault()">
+
+            إنشاء حساب جديد
+
+          </a>
+
+        </div>
+
+      </form>
+
+
+      <!-- نموذج إنشاء حساب عميل -->
+      <form
+        *ngIf="!isLoginMode"
+        (ngSubmit)="onRegister()"
+        class="auth-form">
+
+        <div class="input-group">
+
+          <label>الاسم الكامل</label>
+
+          <input
+            type="text"
+            [(ngModel)]="registerData.fullName"
+            name="fullName"
+            placeholder="اسمك الكريم"
+            required>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>البريد الإلكتروني</label>
+
+          <input
+            type="email"
+            [(ngModel)]="registerData.email"
+            name="registerEmail"
+            placeholder="example@domain.com"
+            required>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>رقم الهاتف</label>
+
+          <input
+            type="tel"
+            [(ngModel)]="registerData.phone"
+            name="phone"
+            placeholder="05xxxxxxxx"
+            required>
+
+        </div>
+
+
+        <div class="input-group password-group">
+
+          <label>كلمة المرور</label>
+
+          <div class="password-wrapper" style="position: relative;">
+
+            <input
+              [type]="showRegisterPassword ? 'text' : 'password'"
+              [(ngModel)]="registerData.password"
+              name="registerPassword"
+              placeholder="********"
+              required
+              style="width: 100%;">
+
+            <button
+              type="button"
+              (click)="toggleRegisterPasswordVisibility()"
+              style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #994b94; font-weight: bold;">
+
+              {{ showRegisterPassword ? 'إخفاء' : 'إظهار' }}
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button type="submit" class="submit-btn">
+          إنشاء حساب جديد
+        </button>
+
+
+        <div class="register-link">
+
+          لديك حساب بالفعل؟
+
+          <a
+            href="#"
+            (click)="showLoginForm(); $event.preventDefault()">
+
+            تسجيل الدخول
+
+          </a>
+
+        </div>
+
+      </form>
+
     </div>
 
-    <!-- تسجيل الدخول -->
-    <form
-      *ngIf="isLoginMode"
-      (ngSubmit)="onLogin()"
-      class="auth-form"
-    >
+  </main>
 
-      <div class="input-group">
-        <label>البريد الإلكتروني</label>
-
-        <input
-          type="email"
-          [(ngModel)]="loginData.email"
-          name="email"
-          placeholder="example@domain.com"
-          required
-        >
-      </div>
-
-      <div class="input-group password-group">
-        <label>كلمة المرور</label>
-
-        <div class="password-wrapper" style="position: relative;">
-
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            [(ngModel)]="loginData.password"
-            name="password"
-            placeholder="********"
-            required
-            style="width: 100%;"
-          >
-
-          <button
-            type="button"
-            (click)="togglePasswordVisibility()"
-            style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #994b94; font-weight: bold;"
-          >
-            {{ showPassword ? 'إخفاء' : 'إظهار' }}
-          </button>
-
-        </div>
-      </div>
-
-      <div class="auth-options">
-        <label class="remember-me">
-          <input type="checkbox">
-          تذكرني
-        </label>
-
-        <a href="#" class="forgot-password">
-          نسيت كلمة المرور؟
-        </a>
-      </div>
-
-      <button type="submit" class="submit-btn">
-        تسجيل الدخول
-      </button>
-
-      <div class="register-link">
-        ليس لديك حساب؟
-        <a href="#" (click)="showRegisterForm(); $event.preventDefault()">
-          إنشاء حساب جديد
-        </a>
-      </div>
-
-    </form>
-
-    <!-- إنشاء حساب عميل -->
-    <form
-      *ngIf="!isLoginMode"
-      (ngSubmit)="onRegister()"
-      class="auth-form"
-    >
-
-      <div class="input-group">
-        <label>الاسم الكامل</label>
-
-        <input
-          type="text"
-          [(ngModel)]="registerData.fullName"
-          name="fullName"
-          placeholder="اسمك الكريم"
-          required
-        >
-      </div>
-
-      <div class="input-group">
-        <label>البريد الإلكتروني</label>
-
-        <input
-          type="email"
-          [(ngModel)]="registerData.email"
-          name="registerEmail"
-          placeholder="example@domain.com"
-          required
-        >
-      </div>
-
-      <div class="input-group">
-        <label>رقم الهاتف</label>
-
-        <input
-          type="tel"
-          [(ngModel)]="registerData.phone"
-          name="phone"
-          placeholder="05xxxxxxxx"
-          required
-        >
-      </div>
-
-      <div class="input-group password-group">
-        <label>كلمة المرور</label>
-
-        <div class="password-wrapper" style="position: relative;">
-
-          <input
-            [type]="showRegisterPassword ? 'text' : 'password'"
-            [(ngModel)]="registerData.password"
-            name="registerPassword"
-            placeholder="********"
-            required
-            style="width: 100%;"
-          >
-
-          <button
-            type="button"
-            (click)="toggleRegisterPasswordVisibility()"
-            style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #994b94; font-weight: bold;"
-          >
-            {{ showRegisterPassword ? 'إخفاء' : 'إظهار' }}
-          </button>
-
-        </div>
-      </div>
-
-      <button type="submit" class="submit-btn">
-        إنشاء حساب جديد
-      </button>
-
-      <div class="register-link">
-        لديك حساب بالفعل؟
-        <a href="#" (click)="showLoginForm(); $event.preventDefault()">
-          تسجيل الدخول
-        </a>
-      </div>
-
-    </form>
-
-  </div>
 </div>

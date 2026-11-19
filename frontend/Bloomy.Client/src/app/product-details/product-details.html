@@ -1,154 +1,180 @@
 <div class="details-page" dir="rtl">
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <a href="/" class="logo">
-      <img src="/Images/logo.jpeg" alt="Bloomy">
-      <span>Bloomy</span>
-    </a>
+  <main class="details-card">
 
-    <div class="nav-actions">
-      <a href="/products" class="cart-icon">🛒</a>
-      <a href="/contact" class="user-icon">
-        <img src="/Images/user.png" alt="حساب المستخدم">
+    <!-- Header -->
+    <header class="details-header">
+
+      <a routerLink="/products" class="back-link">
+        <span>←</span>
+        العودة للمنتجات
       </a>
-    </div>
-  </header>
 
-  <main class="product-details-container">
+      <a routerLink="/home" class="logo">
+        <span>Bloomy</span>
+        <img src="/Images/logo.jpeg" alt="Bloomy">
+      </a>
 
+    </header>
+
+    <!-- Product Layout -->
     <div class="product-layout">
 
-      <!-- Product Images -->
+      <!-- Product Information - Left -->
+      <section class="product-info">
+
+        <div class="product-heading">
+
+          <h1>{{ product.name }}</h1>
+
+          <div class="rating">
+            <span class="reviews">({{ product.reviews }})</span>
+            <span class="stars">★★★★★</span>
+          </div>
+
+          <div class="price">
+            {{ product.price }} ر.س
+          </div>
+
+          <p class="description">
+            {{ product.description }}
+          </p>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Product Details -->
+        <section class="details-section">
+
+          <h2>
+            <span>🎁</span>
+            تفاصيل المنتج
+          </h2>
+
+          <div class="detail-row">
+            <span class="detail-icon">📦</span>
+            <strong>التصميم:</strong>
+            <p>{{ product.design }}</p>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-icon">🌸</span>
+            <strong>المكونات:</strong>
+            <p>{{ product.ingredients }}</p>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-icon">💜</span>
+            <strong>المناسبات:</strong>
+            <p>{{ product.occasion }}</p>
+          </div>
+
+        </section>
+
+        <!-- Bottom Actions -->
+        <div class="product-actions">
+
+          <button
+            type="button"
+            class="favorite-button"
+            [class.favorite-active]="isFavorite"
+            (click)="toggleFavorite()"
+            aria-label="إضافة للمفضلة">
+
+            {{ isFavorite ? '♥' : '♡' }}
+
+          </button>
+
+          <button
+            type="button"
+            class="add-to-cart-button"
+            (click)="addToCart()">
+
+            <span>🛒</span>
+            إضافة إلى السلة
+
+          </button>
+
+          <div class="quantity-section">
+
+            <strong>الكمية:</strong>
+
+            <div class="quantity-control">
+
+              <button
+                type="button"
+                (click)="decreaseQuantity()"
+                aria-label="تقليل الكمية">
+                −
+              </button>
+
+              <span>{{ quantity }}</span>
+
+              <button
+                type="button"
+                (click)="increaseQuantity()"
+                aria-label="زيادة الكمية">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Product Image - Right -->
       <section class="product-gallery">
 
         <div class="main-image">
-          <img [src]="selectedImage" alt="باقة لافندر الملكية">
-        </div>
 
-        <div class="thumbnail-images">
-          @for (image of images; track $index) {
-            <button
-              class="thumbnail"
-              [class.active]="selectedImage === image && images.indexOf(image) === $index"
-              (click)="selectImage(image)">
-              <img [src]="image" alt="صورة المنتج">
-            </button>
-          }
+          <img
+            [src]="product.image"
+            [alt]="product.name">
+
         </div>
 
       </section>
-
-      <!-- Product Information -->
-      <section class="product-info">
-
-        <h1>باقة لافندر الملكية</h1>
-
-        <div class="rating">
-          <span class="stars">★★★★★</span>
-          <span class="reviews">(128)</span>
-        </div>
-
-        <div class="price">199 ر.س</div>
-
-        <p class="description">
-          باقة فاخرة من الورود البنفسجية والبيضاء
-          مع تنسيق أنيق وتغليف مميز يناسب أجمل المناسبات.
-        </p>
-
-        <div class="options-divider"></div>
-
-        <!-- Bouquet Size -->
-        <div class="option-group">
-          <h3>حجم الباقة</h3>
-
-          <div class="size-options">
-            <button
-              class="size-button"
-              [class.selected]="selectedSize === 'صغير'"
-              (click)="selectSize('صغير')">
-              صغير
-            </button>
-
-            <button
-              class="size-button"
-              [class.selected]="selectedSize === 'متوسط'"
-              (click)="selectSize('متوسط')">
-              متوسط
-            </button>
-
-            <button
-              class="size-button"
-              [class.selected]="selectedSize === 'كبير'"
-              (click)="selectSize('كبير')">
-              كبير
-            </button>
-          </div>
-        </div>
-
-        <!-- Bouquet Color -->
-        <div class="option-group">
-          <h3>لون التنسيق</h3>
-
-          <div class="color-options">
-            <button
-              class="color-circle lavender"
-              [class.selected]="selectedColor === 'lavender'"
-              (click)="selectColor('lavender')"
-              aria-label="بنفسجي">
-            </button>
-
-            <button
-              class="color-circle pink"
-              [class.selected]="selectedColor === 'pink'"
-              (click)="selectColor('pink')"
-              aria-label="وردي">
-            </button>
-
-            <button
-              class="color-circle cream"
-              [class.selected]="selectedColor === 'cream'"
-              (click)="selectColor('cream')"
-              aria-label="أبيض كريمي">
-            </button>
-          </div>
-        </div>
-
-        <!-- Quantity -->
-        <div class="quantity-section">
-          <div class="quantity-control">
-            <button (click)="increaseQuantity()" aria-label="زيادة الكمية">+</button>
-
-            <span>{{ quantity }}</span>
-
-            <button (click)="decreaseQuantity()" aria-label="تقليل الكمية">−</button>
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-
-    <!-- Bottom Actions -->
-    <div class="product-actions">
-
-      <button
-        class="favorite-button"
-        [class.favorite-active]="isFavorite"
-        (click)="toggleFavorite()"
-        aria-label="إضافة للمفضلة">
-        {{ isFavorite ? '♥' : '♡' }}
-      </button>
-
-      <button
-        class="add-to-cart-button"
-        (click)="addToCart()">
-        <span>🛒</span>
-        إضافة إلى السلة
-      </button>
 
     </div>
 
   </main>
+
+  <!-- Login Message -->
+  <div
+    class="login-overlay"
+    *ngIf="showLoginPrompt">
+
+    <div class="login-message" dir="rtl">
+
+      <div class="login-icon">🔒</div>
+
+      <h2>تسجيل الدخول مطلوب</h2>
+
+      <p>
+        يلزم تسجيل الدخول بحساب عميل أولاً
+        حتى تتمكن من إضافة المنتج إلى السلة.
+      </p>
+
+      <button
+        type="button"
+        class="login-button"
+        (click)="goToLogin()">
+        تسجيل الدخول
+      </button>
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="closeLoginPrompt()">
+        إلغاء
+      </button>
+
+    </div>
+
+  </div>
 
 </div>

@@ -1,66 +1,108 @@
-<div class="profile-page">
+<div class="profile-page" dir="rtl">
 
   <header class="profile-header">
-    <a routerLink="/home" class="logo">Bloomy 🌸</a>
-    <span>الملف الشخصي</span>
+
+    <a routerLink="/home" class="logo">
+      <img src="/Images/logo.jpeg" alt="Bloomy">
+      <span>Bloomy</span>
+    </a>
+
   </header>
 
   <main class="profile-container">
 
-    <div class="profile-icon">👤</div>
+    <div class="profile-title">
 
-    <h2>ملفي الشخصي</h2>
-    <p class="subtitle">أهلاً بكِ في عالم Bloomy 🌷</p>
+      <div class="profile-avatar">
+        <img src="/Images/user.png" alt="العميل">
+      </div>
 
+      <h1>الملف الشخصي</h1>
+      <p>إدارة بيانات حساب العميل في Bloomy</p>
+
+    </div>
+
+    <!-- المعلومات الشخصية -->
     <section class="profile-card">
-      <h3>المعلومات الشخصية</h3>
 
-      <label>الاسم الكامل</label>
-      <input
-        type="text"
-        [(ngModel)]="customerData.fullName"
-        placeholder="أدخلي اسمك">
+      <h2>المعلومات الشخصية</h2>
 
-      <label>البريد الإلكتروني</label>
-      <input
-        type="email"
-        [(ngModel)]="customerData.email"
-        placeholder="أدخلي بريدك الإلكتروني">
+      <div class="input-group">
+        <label>الاسم الكامل</label>
 
-      <label>رقم الهاتف</label>
-      <input
-        type="tel"
-        [(ngModel)]="customerData.phone"
-        placeholder="أدخلي رقم هاتفك">
+        <input
+          type="text"
+          [(ngModel)]="customerData.fullName"
+          placeholder="الاسم الكامل">
+      </div>
 
-      <button type="button" class="save-btn" (click)="saveProfile()">
-        حفظ التعديلات
+      <div class="input-group">
+        <label>البريد الإلكتروني</label>
+
+        <input
+          type="email"
+          [(ngModel)]="customerData.email"
+          placeholder="البريد الإلكتروني">
+      </div>
+
+      <button
+        class="save-button"
+        type="button"
+        (click)="saveProfile()">
+        حفظ التغييرات
       </button>
+
     </section>
 
+    <!-- تغيير كلمة المرور -->
     <section class="profile-card">
-      <h3>تغيير كلمة المرور</h3>
 
-      <label>كلمة المرور الحالية</label>
-      <input
-        type="password"
-        [(ngModel)]="currentPassword"
-        placeholder="كلمة المرور الحالية">
+      <h2>تغيير كلمة المرور</h2>
 
-      <label>كلمة المرور الجديدة</label>
-      <input
-        type="password"
-        [(ngModel)]="newPassword"
-        placeholder="كلمة المرور الجديدة">
+      <div class="input-group">
+        <label>كلمة المرور الحالية</label>
 
-      <button type="button" class="password-btn" (click)="changePassword()">
-        حفظ كلمة المرور الجديدة
+        <input
+          type="password"
+          [(ngModel)]="currentPassword"
+          placeholder="أدخل كلمة المرور الحالية">
+      </div>
+
+      <div class="input-group">
+        <label>كلمة المرور الجديدة</label>
+
+        <input
+          type="password"
+          [(ngModel)]="newPassword"
+          placeholder="أدخل كلمة المرور الجديدة">
+      </div>
+
+      <div class="input-group">
+        <label>تأكيد كلمة المرور الجديدة</label>
+
+        <input
+          type="password"
+          [(ngModel)]="confirmPassword"
+          placeholder="أعد كتابة كلمة المرور الجديدة">
+      </div>
+
+      <button
+        class="save-button"
+        type="button"
+        (click)="changePassword()">
+        تغيير كلمة المرور
       </button>
+
     </section>
 
-    <button type="button" class="logout-btn" (click)="logout()">
+    <!-- تسجيل الخروج -->
+    <button
+      class="logout-button"
+      type="button"
+      (click)="logout()">
       تسجيل الخروج
     </button>
 
   </main>
+
 </div>

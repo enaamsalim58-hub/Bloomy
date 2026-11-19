@@ -12,6 +12,7 @@ import { AuthService } from '../auth.service';
   styleUrl: './customer-profile.css'
 })
 export class CustomerProfile {
+
   customerData = {
     fullName: '',
     email: '',
@@ -20,11 +21,13 @@ export class CustomerProfile {
 
   currentPassword = '';
   newPassword = '';
+  confirmPassword = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {
+
     const user = this.authService.currentUser;
 
     if (!user || user.role !== 'customer') {
@@ -39,19 +42,40 @@ export class CustomerProfile {
     };
   }
 
-  saveProfile() {
+  saveProfile(): void {
+
     const success = this.authService.updateCustomerProfile(
       this.customerData.fullName,
       this.customerData.email,
       this.customerData.phone
     );
 
-    alert(success ? 'تم تحديث بياناتك بنجاح 🌸' : 'تعذر تحديث البيانات. تأكدي من البريد الإلكتروني.');
+    if (!success) {
+      alert('تعذر تحديث البيانات. تأكدي من البريد الإلكتروني.');
+      return;
+    }
+
+    alert('تم تحديث بياناتك بنجاح 🌸');
   }
 
-  changePassword() {
-    if (!this.currentPassword || !this.newPassword) {
-      alert('يرجى تعبئة حقول كلمة المرور');
+  changePassword(): void {
+
+    if (
+      !this.currentPassword ||
+      !this.newPassword ||
+      !this.confirmPassword
+    ) {
+      alert('يرجى تعبئة جميع حقول كلمة المرور');
+      return;
+    }
+
+    if (this.newPassword.length < 3) {
+      alert('كلمة المرور الجديدة قصيرة جداً');
+      return;
+    }
+
+    if (this.newPassword !== this.confirmPassword) {
+      alert('كلمتا المرور الجديدتان غير متطابقتين');
       return;
     }
 
@@ -60,17 +84,21 @@ export class CustomerProfile {
       this.newPassword
     );
 
-    if (success) {
-      alert('تم تغيير كلمة المرور بنجاح 🌸');
-      this.currentPassword = '';
-      this.newPassword = '';
-    } else {
-      alert('كلمة المرور الحالية غير صحيحة أو الجديدة قصيرة');
+    if (!success) {
+      alert('كلمة المرور الحالية غير صحيحة');
+      return;
     }
+
+    alert('تم تغيير كلمة المرور بنجاح 🌸');
+
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }

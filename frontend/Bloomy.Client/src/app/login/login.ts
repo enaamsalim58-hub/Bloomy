@@ -1,14 +1,13 @@
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -40,34 +39,38 @@ export class Login {
     newPassword: ''
   };
 
- constructor(
-  private router: Router,
-  private authService: AuthService
-) {
-  const user = this.authService.currentUser;
-
-  if (user) {
-    this.router.navigate(['/home']);
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
   }
-}
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
-  toggleRegisterPasswordVisibility() {
+  toggleRegisterPasswordVisibility(): void {
     this.showRegisterPassword = !this.showRegisterPassword;
   }
 
-  showRegisterForm() {
+  showRegisterForm(): void {
     this.isLoginMode = false;
   }
 
-  showLoginForm() {
+  showLoginForm(): void {
     this.isLoginMode = true;
   }
 
-  onLogin() {
+  onLogin(): void {
+
+    if (!this.loginData.email.trim() || !this.loginData.password) {
+      alert('يرجى إدخال البريد الإلكتروني وكلمة المرور');
+      return;
+    }
+
     const user = this.authService.login(
       this.loginData.email.trim(),
       this.loginData.password
@@ -78,11 +81,17 @@ export class Login {
       return;
     }
 
-    alert('مرحباً بك في Bloomy 🌸');
+    alert(
+      user.role === 'admin'
+        ? 'مرحباً بك أيها المدير في Bloomy 🌸'
+        : 'مرحباً بك في Bloomy 🌸'
+    );
+
     this.router.navigate(['/home']);
   }
 
-  onRegister() {
+  onRegister(): void {
+
     if (
       !this.registerData.fullName.trim() ||
       !this.registerData.email.trim() ||
@@ -112,10 +121,12 @@ export class Login {
     }
 
     alert('تم إنشاء حسابك بنجاح، أهلاً بك في Bloomy 🌸');
+
     this.router.navigate(['/home']);
   }
 
-  saveProfile() {
+  saveProfile(): void {
+
     const success = this.authService.updateCustomerProfile(
       this.profileData.fullName,
       this.profileData.email,
@@ -128,6 +139,7 @@ export class Login {
     }
 
     if (this.profileData.newPassword) {
+
       const passwordChanged =
         this.authService.changeCustomerPassword(
           this.profileData.currentPassword,
@@ -135,7 +147,9 @@ export class Login {
         );
 
       if (!passwordChanged) {
-        alert('تم حفظ المعلومات، لكن كلمة المرور الحالية غير صحيحة أو كلمة المرور الجديدة قصيرة.');
+        alert(
+          'تم حفظ المعلومات، لكن كلمة المرور الحالية غير صحيحة أو كلمة المرور الجديدة قصيرة.'
+        );
         return;
       }
     }
@@ -146,8 +160,9 @@ export class Login {
     this.profileData.newPassword = '';
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }
