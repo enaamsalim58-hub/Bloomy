@@ -14,32 +14,53 @@
 
 .orders-page {
   min-height: 100vh;
-  padding: 25px;
+  padding: 0;
   background: linear-gradient(135deg, #faf5ff, #f5eafa);
   direction: rtl;
 }
 
+
 /* ==============================
-   عنوان الصفحة
+   شريط العنوان الأبيض
 ============================== */
 
-.page-title {
-  width: fit-content;
-  margin: 0 auto 25px;
-  padding: 12px 45px;
-  border-radius: 35px;
-  background: linear-gradient(90deg, #a84da5, #74358d);
-  color: white;
-  font-size: 25px;
-  font-weight: bold;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(132, 57, 145, 0.15);
+.orders-header {
+  width: 100%;
+  height: 82px;
+  padding: 8px 7%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 15px rgba(80, 35, 85, 0.06);
+
+  position: relative;
+  z-index: 5;
 }
 
-.page-title span {
-  margin-left: 15px;
+/* شعار Bloomy */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #71346f;
+  text-decoration: none;
+
   font-size: 30px;
+  font-weight: 900;
 }
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
 
 /* ==============================
    الحاوية الرئيسية
@@ -48,14 +69,22 @@
 .orders-container {
   display: flex;
   flex-direction: row;
+
   min-height: 650px;
+  margin: 25px;
+
   overflow: hidden;
+
   direction: rtl;
+
   border: 1px solid #e8d8ed;
   border-radius: 25px;
+
   background: #fffafd;
+
   box-shadow: 0 5px 20px rgba(103, 51, 119, 0.08);
 }
+
 
 /* ==============================
    القائمة الجانبية
@@ -64,15 +93,24 @@
 .sidebar {
   width: 230px;
   flex-shrink: 0;
+
   padding: 28px 17px;
-  background: linear-gradient(180deg, #f8edfa, #f1e2f7);
+
+  background: linear-gradient(
+    180deg,
+    #f8edfa,
+    #f1e2f7
+  );
+
   border-left: 1px solid #ead8ef;
 }
 
 .profile {
   margin-bottom: 30px;
   padding-bottom: 22px;
+
   text-align: center;
+
   border-bottom: 1px solid #e6d2eb;
 }
 
@@ -80,24 +118,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 78px;
   height: 78px;
+
   margin: auto;
+
   border: 3px solid white;
   border-radius: 50%;
+
   background: #ead1f0;
+
   font-size: 38px;
+
   box-shadow: 0 4px 12px rgba(120, 60, 140, 0.15);
 }
 
 .profile h3 {
   margin: 12px 0 0;
+
   color: #452b4c;
+
   font-size: 17px;
   font-weight: bold;
 }
 
-/* أزرار القائمة الجانبية */
+
+/* ==============================
+   أزرار القائمة الجانبية
+============================== */
 
 .side-menu {
   display: flex;
@@ -108,22 +157,27 @@
 .side-menu button {
   width: 100%;
   min-height: 46px;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
   padding: 12px 15px;
 
   border: none;
   border-radius: 12px;
+
   background: transparent;
 
   color: #452b4c;
+
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
   text-align: right;
 
   cursor: pointer;
+
   transition: all 0.25s ease;
 }
 
@@ -134,8 +188,14 @@
 }
 
 .side-menu button.active {
-  background: linear-gradient(100deg, #b65bb0, #853d99);
+  background: linear-gradient(
+    100deg,
+    #b65bb0,
+    #853d99
+  );
+
   color: white;
+
   box-shadow: 0 4px 12px rgba(153, 75, 148, 0.22);
 }
 
@@ -144,6 +204,7 @@
   outline-offset: 3px;
 }
 
+
 /* ==============================
    المحتوى الرئيسي
 ============================== */
@@ -151,16 +212,21 @@
 .main-content {
   flex: 1;
   min-width: 0;
+
   padding: 30px;
+
   background: #fffafd;
 }
 
 .main-content h2 {
   margin: 0 0 25px;
+
   color: #4d245d;
+
   font-size: 26px;
   font-weight: bold;
 }
+
 
 /* ==============================
    تبويبات الطلبات
@@ -170,21 +236,29 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+
   gap: 25px;
   margin-bottom: 25px;
+
   border-bottom: 1px solid #eaddec;
 }
 
 .tabs button {
   padding: 12px 15px;
+
   border: none;
   border-bottom: 3px solid transparent;
+
   background: transparent;
+
   color: #57365e;
+
   font-family: inherit;
   font-size: 15px;
   font-weight: bold;
+
   cursor: pointer;
+
   transition: all 0.2s ease;
 }
 
@@ -196,6 +270,7 @@
   border-bottom-color: #a64fa7;
   color: #8d3d96;
 }
+
 
 /* ==============================
    بطاقات الطلبات
@@ -211,13 +286,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 12px;
+
   min-height: 80px;
   padding: 12px 15px;
+
   border: 1px solid #eee2f0;
   border-radius: 16px;
+
   background: #ffffff;
+
   box-shadow: 0 3px 10px rgba(100, 50, 110, 0.05);
+
   transition: all 0.2s ease;
 }
 
@@ -230,7 +311,9 @@
 .order-card img {
   width: 52px;
   height: 52px;
+
   border-radius: 12px;
+
   object-fit: cover;
 }
 
@@ -250,13 +333,18 @@
 
 .order-card button {
   padding: 9px 17px;
+
   border: none;
   border-radius: 10px;
+
   background: #f2e2f6;
   color: #813d8e;
+
   font-family: inherit;
   font-weight: bold;
+
   cursor: pointer;
+
   transition: 0.2s;
 }
 
@@ -265,13 +353,19 @@
   color: white;
 }
 
-/* حالات الطلبات */
+
+/* ==============================
+   حالات الطلبات
+============================== */
 
 .status {
   padding: 8px 13px;
+
   border-radius: 20px;
+
   font-size: 12px !important;
   font-weight: bold;
+
   white-space: nowrap;
 }
 
@@ -285,6 +379,7 @@
   background: #dff5e5;
 }
 
+
 /* ==============================
    تتبع الطلب
 ============================== */
@@ -294,17 +389,27 @@
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
+
   gap: 15px;
+
   margin-top: 40px;
   padding: 22px 15px;
+
   border: 1px solid #eee0f0;
   border-radius: 18px;
-  background: linear-gradient(135deg, #fffafd, #f8effa);
+
+  background: linear-gradient(
+    135deg,
+    #fffafd,
+    #f8effa
+  );
 }
 
 .tracking-section h3 {
   width: 100%;
+
   margin: 0 0 10px;
+
   color: #653276;
   font-size: 18px;
   text-align: center;
@@ -313,7 +418,9 @@
 .tracking-step {
   flex: 1;
   min-width: 85px;
+
   text-align: center;
+
   color: #4c3454;
 }
 
@@ -321,22 +428,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 43px;
   height: 43px;
+
   margin: auto;
+
   border: 2px solid #b66ab8;
   border-radius: 50%;
+
   background: #f7eafa;
   color: #91449b;
+
   font-size: 20px;
+
   transition: 0.2s;
 }
 
 .tracking-step p {
   margin-top: 10px;
+
   font-size: 13px;
   font-weight: bold;
 }
+
 
 /* ==============================
    المفضلة
@@ -351,6 +466,7 @@
   font-size: 15px;
 }
 
+
 /* ==============================
    العناوين
 ============================== */
@@ -360,6 +476,7 @@
   text-align: right;
 }
 
+
 /* ==============================
    البيانات الشخصية
 ============================== */
@@ -368,19 +485,25 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+
   max-width: 550px;
   padding: 22px;
+
   border: 1px solid #ead8ef;
   border-radius: 16px;
+
   background: #fcf7fd;
 }
 
 .profile-info p {
   margin: 0;
   padding: 13px;
+
   border-radius: 10px;
+
   background: white;
   color: #76567e;
+
   font-size: 15px;
 }
 
@@ -388,23 +511,36 @@
   color: #71317e;
 }
 
+
 /* ==============================
    الشاشات الصغيرة
 ============================== */
 
 @media (max-width: 750px) {
 
-  .orders-page {
-    padding: 12px;
+  .orders-header {
+    height: 72px;
+    padding: 8px 5%;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .logo img {
+    width: 43px;
+    height: 43px;
   }
 
   .orders-container {
     flex-direction: column;
+    margin: 12px;
   }
 
   .sidebar {
     width: 100%;
     padding: 18px;
+
     border-left: none;
     border-bottom: 1px solid #e7d5ed;
   }
@@ -428,7 +564,9 @@
   .side-menu button {
     width: auto;
     min-height: 40px;
+
     padding: 9px 12px;
+
     font-size: 12px;
   }
 
@@ -458,9 +596,4 @@
     min-width: 65px;
   }
 
-  .page-title {
-    max-width: 100%;
-    padding: 12px 18px;
-    font-size: 18px;
-  }
 }

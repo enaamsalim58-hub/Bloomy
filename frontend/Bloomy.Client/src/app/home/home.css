@@ -497,3 +497,32 @@
   }
 
 }
+
+
+
+/* زر أيقونة سلة المشتريات */
+.cart-icon-btn {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #f7eff6;
+  color: #994b94;
+  text-decoration: none;
+  border: 1px solid #e8cde5;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+}
+
+.cart-icon-btn svg {
+  width: 23px;
+  height: 23px;
+}
+
+.cart-icon-btn:hover {
+  background-color: #994b94;
+  color: white;
+  transform: scale(1.08);
+}

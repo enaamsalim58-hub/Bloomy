@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {
+  Router,
+  RouterModule
+} from '@angular/router';
+
+import { AuthService } from '../auth.service';
+import { WishlistService } from '../services/wishlist.service';
 
 interface Product {
   productId: number;
@@ -22,8 +28,6 @@ export class Products {
 
   selectedCategory = 'الكل';
 
-  favorites: number[] = [];
-
   categories = [
     { name: 'الكل', icon: '▦' },
     { name: 'باقات الورود', icon: '🌸' },
@@ -32,12 +36,13 @@ export class Products {
     { name: 'الدمى', icon: '🧸' }
   ];
 
+  // ==================================
+  // جميع المنتجات
+  // ==================================
+
   products: Product[] = [
 
-    // ==================================
-    // أولاً: باقات الورود - 4 منتجات
-    // الصور داخل Images/flowers
-    // ==================================
+    // الورود
 
     {
       productId: 1,
@@ -72,10 +77,7 @@ export class Products {
       categoryName: 'باقات الورود'
     },
 
-    // ==================================
-    // ثانياً: الهدايا - 4 منتجات
-    // الصور داخل Images/gifts
-    // ==================================
+    // الهدايا
 
     {
       productId: 5,
@@ -110,10 +112,7 @@ export class Products {
       categoryName: 'الهدايا'
     },
 
-    // ==================================
-    // ثالثاً: الشوكولاتة - 4 منتجات
-    // الصور داخل Images/chocolates
-    // ==================================
+    // الشوكولاتة
 
     {
       productId: 9,
@@ -148,10 +147,7 @@ export class Products {
       categoryName: 'الشوكولاتة'
     },
 
-    // ==================================
-    // رابعاً: الدمى - 4 منتجات
-    // الصور داخل Images/dolls
-    // ==================================
+    // الدمى
 
     {
       productId: 13,
@@ -188,6 +184,12 @@ export class Products {
 
   ];
 
+  constructor(
+    private wishlistService: WishlistService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
   // ==================================
   // عرض المنتجات حسب التصنيف
   // ==================================
@@ -217,26 +219,62 @@ export class Products {
     this.selectedCategory = category;
   }
 
-  // إضافة أو إزالة المفضلة
+  // ==================================
+  // إضافة أو حذف المنتج من المفضلة
+  // ==================================
+
   toggleFavorite(productId: number): void {
 
-    if (this.favorites.includes(productId)) {
+    const user = this.authService.currentUser;
 
-      this.favorites = this.favorites.filter(
-        id => id !== productId
-      );
+    if (!user || user.role !== 'customer') {
 
-    } else {
+      alert('يرجى تسجيل الدخول بحساب عميل لاستخدام المفضلة ❤️');
 
-      this.favorites.push(productId);
+      this.router.navigate(['/login']);
+
+      return;
 
     }
+
+    const product = this.products.find(
+      p => p.productId === productId
+    );
+
+    if (!product) return;
+
+    const added = this.wishlistService.toggleFavorite(
+      user.email,
+      {
+        productId: product.productId,
+        productName: product.name,
+        price: product.price,
+        image: product.image
+      }
+    );
+
+    alert(
+      added
+        ? 'تمت إضافة المنتج إلى المفضلة ❤️'
+        : 'تم حذف المنتج من المفضلة'
+    );
 
   }
 
   // التحقق من المفضلة
   isFavorite(productId: number): boolean {
-    return this.favorites.includes(productId);
+
+    const user = this.authService.currentUser;
+
+    if (!user || user.role !== 'customer') {
+      return false;
+    }
+
+    return this.wishlistService.isFavorite(
+      user.email,
+      productId
+    );
+
   }
 
 }

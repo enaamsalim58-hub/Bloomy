@@ -20,16 +20,37 @@
     <!-- Product Layout -->
     <div class="product-layout">
 
-      <!-- Product Information - Left -->
+      <!-- Product Image -->
+      <section class="product-gallery">
+
+        <div class="main-image">
+
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            (error)="onImageError($event)">
+
+        </div>
+
+      </section>
+
+      <!-- Product Information -->
       <section class="product-info">
 
         <div class="product-heading">
 
+          <span class="product-label">هدية مميزة من Bloomy</span>
+
           <h1>{{ product.name }}</h1>
 
           <div class="rating">
-            <span class="reviews">({{ product.reviews }})</span>
+
             <span class="stars">★★★★★</span>
+
+            <span class="reviews">
+              ({{ product.reviews }} تقييم)
+            </span>
+
           </div>
 
           <div class="price">
@@ -44,68 +65,47 @@
 
         <div class="divider"></div>
 
-        <!-- Product Details -->
+        <!-- Short Details -->
         <section class="details-section">
 
-          <h2>
-            <span>🎁</span>
-            تفاصيل المنتج
-          </h2>
+          <h2>تفاصيل المنتج</h2>
 
           <div class="detail-row">
-            <span class="detail-icon">📦</span>
-            <strong>التصميم:</strong>
-            <p>{{ product.design }}</p>
-          </div>
 
-          <div class="detail-row">
             <span class="detail-icon">🌸</span>
-            <strong>المكونات:</strong>
-            <p>{{ product.ingredients }}</p>
+
+            <div>
+              <strong>المكونات</strong>
+              <p>{{ product.ingredients }}</p>
+            </div>
+
           </div>
 
           <div class="detail-row">
-            <span class="detail-icon">💜</span>
-            <strong>المناسبات:</strong>
-            <p>{{ product.occasion }}</p>
+
+            <span class="detail-icon">🎁</span>
+
+            <div>
+              <strong>التصميم</strong>
+              <p>{{ product.design }}</p>
+            </div>
+
           </div>
 
         </section>
 
-        <!-- Bottom Actions -->
+        <!-- Actions -->
         <div class="product-actions">
-
-          <button
-            type="button"
-            class="favorite-button"
-            [class.favorite-active]="isFavorite"
-            (click)="toggleFavorite()"
-            aria-label="إضافة للمفضلة">
-
-            {{ isFavorite ? '♥' : '♡' }}
-
-          </button>
-
-          <button
-            type="button"
-            class="add-to-cart-button"
-            (click)="addToCart()">
-
-            <span>🛒</span>
-            إضافة إلى السلة
-
-          </button>
 
           <div class="quantity-section">
 
-            <strong>الكمية:</strong>
+            <strong>الكمية</strong>
 
             <div class="quantity-control">
 
               <button
                 type="button"
-                (click)="decreaseQuantity()"
-                aria-label="تقليل الكمية">
+                (click)="decreaseQuantity()">
                 −
               </button>
 
@@ -113,8 +113,7 @@
 
               <button
                 type="button"
-                (click)="increaseQuantity()"
-                aria-label="زيادة الكمية">
+                (click)="increaseQuantity()">
                 +
               </button>
 
@@ -122,18 +121,29 @@
 
           </div>
 
-        </div>
+          <div class="action-buttons">
 
-      </section>
+            <button
+              type="button"
+              class="add-to-cart-button"
+              (click)="addToCart()">
 
-      <!-- Product Image - Right -->
-      <section class="product-gallery">
+              🛒 إضافة إلى السلة
 
-        <div class="main-image">
+            </button>
 
-          <img
-            [src]="product.image"
-            [alt]="product.name">
+            <button
+              type="button"
+              class="favorite-button"
+              [class.favorite-active]="isFavorite"
+              (click)="toggleFavorite()"
+              aria-label="إضافة للمفضلة">
+
+              {{ isFavorite ? '♥' : '♡' }}
+
+            </button>
+
+          </div>
 
         </div>
 

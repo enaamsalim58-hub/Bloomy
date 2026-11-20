@@ -33,21 +33,26 @@ export class Home {
     { name: 'باقات الورود', image: '/Images/f.jpeg' }
   ];
 
+  // التحقق من تسجيل الدخول
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
+  // التحقق من المدير
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
 
+  // التحقق من العميل
   get isCustomer(): boolean {
     return this.authService.isCustomer();
   }
 
+  // تسجيل الخروج والعودة إلى واجهة الزائر
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+
+    this.router.navigateByUrl('/home');
   }
 
 }

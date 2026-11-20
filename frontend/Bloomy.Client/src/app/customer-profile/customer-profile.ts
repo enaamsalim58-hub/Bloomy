@@ -98,7 +98,9 @@ export class CustomerProfile {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+
+    // العودة إلى واجهة الزائر
+    this.router.navigate(['/home']);
   }
 
 }

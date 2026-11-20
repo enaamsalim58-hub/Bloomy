@@ -1,9 +1,14 @@
 <div class="orders-page" dir="rtl">
 
-  <div class="page-title">
-    <span>5</span>
-    حساب العميل وتتبع الطلبات
-  </div>
+  <!-- شريط العنوان الأبيض -->
+  <header class="orders-header">
+
+    <a routerLink="/home" class="logo">
+      <img src="/Images/logo.jpeg" alt="Bloomy">
+      <span>Bloomy</span>
+    </a>
+
+  </header>
 
   <div class="orders-container">
 
@@ -11,48 +16,67 @@
     <aside class="sidebar">
 
       <div class="profile">
+
         <div class="avatar">👩🏻</div>
+
         <h3>{{ user.fullName }}</h3>
+
       </div>
 
       <nav class="side-menu">
 
+        <!-- طلباتي -->
         <button
+          type="button"
           [class.active]="activeTab === 'orders'"
           (click)="activeTab = 'orders'">
+
           ▣ طلباتي
+
         </button>
 
+        <!-- المفضلة -->
         <button
+          type="button"
           [class.active]="activeTab === 'wishlist'"
           (click)="activeTab = 'wishlist'">
+
           ♡ المفضلة
+
         </button>
 
+        <!-- البيانات الشخصية -->
         <button
-          [class.active]="activeTab === 'addresses'"
-          (click)="activeTab = 'addresses'">
-          ⌖ العناوين
-        </button>
-
-        <button
+          type="button"
           [class.active]="activeTab === 'info'"
           (click)="activeTab = 'info'">
+
           ♙ البيانات الشخصية
+
         </button>
 
-        <button (click)="logout()">
+        <!-- تسجيل الخروج -->
+        <button
+          type="button"
+          (click)="logout()">
+
           ⇥ تسجيل الخروج
+
         </button>
 
       </nav>
 
     </aside>
 
+
     <!-- المحتوى الرئيسي -->
     <main class="main-content">
 
-      <!-- صفحة طلباتي -->
+
+      <!-- ==================================
+           صفحة طلباتي
+      ================================== -->
+
       <section *ngIf="activeTab === 'orders'">
 
         <h2>طلباتي</h2>
@@ -60,24 +84,34 @@
         <div class="tabs">
 
           <button
+            type="button"
             [class.selected]="orderFilter === 'all'"
             (click)="orderFilter = 'all'">
+
             جميع الطلبات
+
           </button>
 
           <button
+            type="button"
             [class.selected]="orderFilter === 'processing'"
             (click)="orderFilter = 'processing'">
+
             قيد التجهيز
+
           </button>
 
           <button
+            type="button"
             [class.selected]="orderFilter === 'delivered'"
             (click)="orderFilter = 'delivered'">
+
             تم التسليم
+
           </button>
 
         </div>
+
 
         <div class="orders-list">
 
@@ -86,7 +120,9 @@
             *ngFor="let order of filteredOrders"
             (click)="selectOrder(order)">
 
-            <img [src]="order.productImage" alt="صورة المنتج">
+            <img
+              [src]="order.productImage"
+              alt="صورة المنتج">
 
             <strong>#{{ order.orderId }}</strong>
 
@@ -98,10 +134,13 @@
               class="status"
               [class.delivered]="order.status === 'تم التسليم'"
               [class.preparing]="order.status !== 'تم التسليم'">
+
               {{ order.status }}
+
             </span>
 
           </div>
+
 
           <p *ngIf="filteredOrders.length === 0">
             لا توجد طلبات في هذه الحالة.
@@ -109,48 +148,79 @@
 
         </div>
 
+
         <!-- تتبع الطلب المحدد -->
-        <section class="tracking-section" *ngIf="selectedOrder">
+        <section
+          class="tracking-section"
+          *ngIf="selectedOrder">
 
-          <h3>تتبع الطلب #{{ selectedOrder.orderId }}</h3>
+          <h3>
+            تتبع الطلب #{{ selectedOrder.orderId }}
+          </h3>
 
           <div class="tracking-step">
+
             <span>✉</span>
+
             <p>تم الطلب</p>
+
           </div>
 
           <div class="tracking-step">
+
             <span>⚙</span>
+
             <p>قيد التجهيز</p>
+
           </div>
 
           <div class="tracking-step">
+
             <span>🚚</span>
+
             <p>في الطريق</p>
+
           </div>
 
           <div class="tracking-step">
+
             <span>✓</span>
+
             <p>تم التسليم</p>
+
           </div>
 
         </section>
 
       </section>
 
-      <!-- صفحة المفضلة -->
+
+      <!-- ==================================
+           صفحة المفضلة
+      ================================== -->
+
       <section *ngIf="activeTab === 'wishlist'">
 
         <h2>المفضلة</h2>
 
-        <div class="order-card" *ngFor="let item of wishlist">
+        <div
+          class="order-card"
+          *ngFor="let item of wishlist">
 
-          <strong>{{ item.productName }}</strong>
+          <strong>
+            {{ item.productName }}
+          </strong>
 
-          <b>{{ item.price }} ر.س</b>
+          <b>
+            {{ item.price }} ر.س
+          </b>
 
-          <button (click)="removeFromWishlist(item.productId)">
+          <button
+            type="button"
+            (click)="removeFromWishlist(item.productId)">
+
             حذف
+
           </button>
 
         </div>
@@ -161,22 +231,11 @@
 
       </section>
 
-      <!-- صفحة العناوين -->
-      <section *ngIf="activeTab === 'addresses'">
 
-        <h2>عناويني</h2>
+      <!-- ==================================
+           صفحة البيانات الشخصية
+      ================================== -->
 
-        <div class="order-card" *ngFor="let address of addresses">
-
-          <strong>{{ address.title }}</strong>
-
-          <span>{{ address.addressLine }}</span>
-
-        </div>
-
-      </section>
-
-      <!-- صفحة البيانات الشخصية -->
       <section *ngIf="activeTab === 'info'">
 
         <h2>البيانات الشخصية</h2>

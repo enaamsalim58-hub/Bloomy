@@ -50,23 +50,44 @@
 
       }
 
-      <!-- روابط العميل -->
-      @if (isLoggedIn && isCustomer) {
+    <!-- روابط العميل -->
+@if (isLoggedIn && isCustomer) {
 
-        <a routerLink="/products" routerLinkActive="active">
-          المنتجات
-        </a>
+  <a routerLink="/products" routerLinkActive="active">
+    المنتجات
+  </a>
 
-        <a routerLink="/my-orders" routerLinkActive="active">
-          تتبع الطلبات
-        </a>
+  <a routerLink="/my-orders" routerLinkActive="active">
+    تتبع الطلبات
+  </a>
 
-        <a href="#"
-           (click)="logout(); $event.preventDefault()">
-          تسجيل الخروج
-        </a>
+  <a href="#"
+     (click)="logout(); $event.preventDefault()">
+    تسجيل الخروج
+  </a>
 
-      }
+  <!-- أيقونة السلة -->
+  <a routerLink="/cart"
+     class="cart-icon-btn"
+     title="سلة المشتريات"
+     aria-label="سلة المشتريات">
+
+    <svg viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg"
+         aria-hidden="true">
+      <path d="M3 3H5L7.2 14.2A2 2 0 0 0 9.16 16H18a2 2 0 0 0 1.94-1.5L22 7H6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+      <circle cx="10" cy="20" r="1.5" fill="currentColor"/>
+      <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+    </svg>
+
+  </a>
+
+}
 
     </nav>
 
